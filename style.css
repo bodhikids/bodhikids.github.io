@@ -1,0 +1,500 @@
+:root {
+    --primary-color: #3a506b; /* Deep Blue */
+    --secondary-color: #ffc300; /* Vibrant Yellow */
+    --background-color: #f0f8ff;
+    --card-background: #ffffff;
+    --text-color: #333;
+    --font-family: 'Nunito', sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    background: linear-gradient(135deg, #6dd5ed, #2193b0);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.background-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden; /* Applying the fix here */
+}
+
+.shape {
+    position: absolute;
+    list-style: none;
+    display: block;
+    background: rgba(255, 255, 255, 0.2);
+    animation: float 20s linear infinite;
+}
+
+.shape1 { width: 20px; height: 20px; left: 10%; bottom: -150px; animation-duration: 18s; }
+.shape2 { width: 80px; height: 80px; left: 25%; bottom: -150px; animation-duration: 12s; }
+.shape3 { width: 150px; height: 150px; left: 50%; bottom: -150px; animation-duration: 25s; }
+.shape4 { width: 60px; height: 60px; left: 75%; bottom: -150px; animation-duration: 22s; }
+.shape5 { width: 40px; height: 40px; left: 90%; bottom: -150px; animation-duration: 15s; }
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}
+
+.app-container {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    z-index: 1;
+}
+
+header h1 {
+    font-size: 3em; /* Slightly larger */
+    color: #f0f8ff; /* Softer, almost-white blue */
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.25); /* Deeper shadow */
+    margin-bottom: 30px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.card {
+    background-color: var(--card-background);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.card h2, .card h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+#profiles {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.profile {
+    cursor: pointer;
+    padding: 15px 25px;
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.profile:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.profile-menu {
+    position: static;
+    opacity: 1;
+    display: flex;
+    gap: 10px;
+}
+
+.profile-menu-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-btn {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.settings-page {
+    text-align: left;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.settings-page h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+}
+
+#profiles-list-settings .profile, #profiles-list-kids .profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+}
+
+#profiles-list-kids {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#profiles-list-kids .profile {
+    cursor: pointer;
+    font-size: 1.5em;
+    text-align: center;
+    justify-content: center;
+}
+
+input[type="text"], input[type="number"] {
+    width: 95%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1em;
+    font-family: var(--font-family);
+}
+
+.btn-primary, .btn-secondary, .module-btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-family);
+    font-weight: 700;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.btn-secondary {
+    background-color: #ccc;
+    color: var(--text-color);
+}
+
+.btn-secondary:hover {
+    background-color: #bbb;
+}
+
+.module-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.module-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    font-size: 1.5em;
+    width: auto; /* Override full width for module buttons */
+}
+
+.module-btn:hover {
+    transform: scale(1.05);
+}
+
+#module-content {
+    text-align: left;
+    line-height: 1.6;
+    font-size: 1.1em;
+    white-space: pre-wrap;
+}
+
+#story-content {
+    text-align: left;
+    line-height: 1.6;
+    font-size: 1.1em;
+    margin-bottom: 30px;
+}
+
+#story-content h2 {
+    text-align: center;
+}
+
+.question-card {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    text-align: left;
+    border: 2px solid transparent;
+}
+
+.question-card.correct {
+    border-color: #4caf50;
+}
+
+.question-card.incorrect {
+    border-color: #f44336;
+}
+
+.question-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.question-number {
+    font-weight: 700;
+    margin-right: 10px;
+    font-size: 1.2em;
+    color: var(--primary-color);
+}
+
+.question-text {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.option {
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.option:hover {
+    background-color: #e9e9e9;
+}
+
+.option.selected {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+#score-container {
+    margin-top: 20px;
+    font-size: 1.5em;
+    color: var(--secondary-color);
+}
+
+.loader {
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid var(--primary-color);
+    width: 40px;
+    height: 40px;
+    animation: spin 1.5s linear infinite;
+    margin: 20px auto;
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.settings-footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #888;
+}
+
+.error-message {
+    color: #f44336;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 600px) {
+    .module-buttons {
+        flex-direction: column;
+    }
+}
+
+/* Floating Action Button */
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 2em;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+    z-index: 1001;
+}
+
+.fab-exit {
+    right: 90px; /* Position it to the left of the settings FAB */
+    background-color: #f44336;
+}
+
+.fab:hover {
+    transform: scale(1.1);
+}
+
+/* Modal Styles */
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+}
+
+.btn-exit {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.btn-exit:hover {
+    background-color: #d32f2f;
+}
+
+.pulse {
+    animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 195, 0, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(255, 195, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 195, 0, 0);
+    }
+}
+
+.btn-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.api-key-info {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 15px;
+}
+
+hr {
+    border: 1px solid #eee;
+    margin: 30px 0;
+}
+
+/* Add to Home Screen Banner */
+#add-to-home-screen-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 15px;
+    text-align: center;
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+}
+
+#add-to-home-screen-banner p {
+    margin: 0;
+    padding-right: 15px;
+}
+
+#close-banner-btn {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.input-error {
+    border-color: #f44336 !important;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}

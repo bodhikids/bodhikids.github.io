@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bodhi</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+        <div class="shape shape5"></div>
+    </div>
+    <div class="app-container">
+        <header>
+            <h1>Bodhi 🌱</h1>
+        </header>
+
+        <!-- Main View for Kids -->
+        <div id="main-view">
+            <div id="welcome-screen" class="card">
+                <h2>Welcome!</h2>
+                <p>Please select your profile to start your adventure!</p>
+                <button id="select-profile-btn" class="btn-primary">Select Profile</button>
+            </div>
+
+            <div id="main-app" class="hidden">
+                <h2 id="welcome-message"></h2>
+                <div id="module-selection" class="card">
+                    <h3>Choose Your Adventure!</h3>
+                    <div class="module-buttons">
+                        <button class="module-btn" data-module="reading">📚 Reading</button>
+                        <button class="module-btn" data-module="math">🧮 Math</button>
+                        <button class="module-btn" data-module="logic">🧠 Logic</button>
+                    </div>
+                </div>
+                <div id="module-view" class="card hidden">
+                    <button id="back-btn" class="btn-secondary">⬅️ Back to Modules</button>
+                    <h3 id="module-title"></h3>
+                    <div class="loader"></div>
+                    <div id="story-content"></div>
+                    <div id="questions-container"></div>
+                    <div id="score-container" class="hidden">
+                        <h4>Your Score: <span id="score">0</span></h4>
+                    </div>
+                    <button id="submit-answers-btn" class="btn-primary hidden">Submit Answers</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button for Settings -->
+    <button id="settings-fab" class="fab">⚙️</button>
+    <button id="exit-to-profile-btn" class="fab fab-exit hidden">🏠</button>
+
+    <!-- Settings Page Modal -->
+    <div id="settings-modal" class="modal-container hidden">
+        <div class="modal-content card settings-page">
+            <h2>⚙️ Parent Settings</h2>
+            <div id="api-key-section">
+                <h3>🔑 Gemini API Key</h3>
+                <input type="text" id="api-key" placeholder="Enter your API key">
+                <p class="api-key-info">Get a free key from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a>.
+                    <br>The free tier is very generous, allowing for over 50 learning modules per day.
+                </p>
+            </div>
+            <hr>
+            <div id="profile-management-section">
+                <h3>👤 Manage Profiles</h3>
+                <div id="profiles-list-settings"></div>
+                <div id="profile-creation" class="hidden">
+                    <h4>Create New Profile</h4>
+                    <input type="text" id="name" placeholder="Name">
+                    <input type="number" id="age" placeholder="Age">
+                    <button id="save-profile-btn" class="btn-primary">Save Profile</button>
+                </div>
+                <button id="add-profile-btn" class="btn-secondary">✨ Add New Profile</button>
+            </div>
+            <div class="settings-footer">
+                <p>Made by <a href="https://simkeyur.github.io" target="_blank" rel="noopener noreferrer">Keyur</a>. Suggestions are welcome!</p>
+            </div>
+            <button id="save-settings-btn" class="btn-primary">Save & Close</button>
+            <p id="safari-homescreen-info" class="hidden">For the best experience on Safari, please add this app to your Home Screen.</p>
+        </div>
+    </div>
+
+    <!-- Kids Profile Selection Modal -->
+    <div id="profile-selection-modal" class="modal-container hidden">
+        <div class="modal-content card">
+            <h2>Who's Learning Today?</h2>
+            <div id="profiles-list-kids"></div>
+            <button id="close-profile-selection-btn" class="btn-close">✖</button>
+        </div>
+    </div>
+
+    <!-- Reusable Parental Gate Modal -->
+    <div id="parental-gate-modal" class="modal-container hidden">
+        <div class="modal-content card">
+            <h2>🔒 Are you a grown-up?</h2>
+            <p>To continue, please answer this question:</p>
+            <p id="parental-question"></p>
+            <input type="number" id="parental-answer" placeholder="Your answer">
+            <p id="parental-error-message" class="error-message hidden">Incorrect answer. Please try again.</p>
+            <button id="submit-parental-answer-btn" class="btn-primary">Confirm</button>
+            <button id="close-parental-gate-btn" class="btn-close">✖</button>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="modal-container hidden">
+        <div class="modal-content card">
+            <h2>✏️ Edit Profile</h2>
+            <input type="text" id="edit-name" placeholder="Enter Name">
+            <input type="number" id="edit-age" placeholder="Enter Age">
+            <button id="save-edit-profile-btn" class="btn-primary">Save Changes</button>
+            <button id="close-edit-modal-btn" class="btn-close">✖</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <script src="prompts.js"></script>
+    <script src="gemini.js"></script>
+    <script type="module" src="ui.js"></script>
+    <script type="module" src="app.js"></script>
+
+    <!-- Add to Home Screen Banner for iOS -->
+    <div id="add-to-home-screen-banner" class="hidden">
+        <p>For the best experience, add Bodhi to your Home Screen! <br><small>(Tap the Share button, then 'Add to Home Screen')</small></p>
+        <button id="close-banner-btn">✖</button>
+    </div>
+</body>
+</html>
