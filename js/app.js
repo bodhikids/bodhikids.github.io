@@ -1,16 +1,19 @@
 import {
     getApiKey,
     setApiKey,
+    generateContent,
     generateStory,
     generateQuestions,
     generateAnswerExplanations,
     generateMathProblem,
     generateLogicPuzzle
 } from './gemini.js';
+import { getPrompt } from './prompts.js';
 import {
     renderProfilesForSettings,
     renderProfilesForKids,
     displayModuleContent,
+    displayQuestions,
     displayError,
     showLoader,
     hideLoader,
@@ -36,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileSelectionModal = document.getElementById('profile-selection-modal');
     const closeProfileSelectionBtn = document.getElementById('close-profile-selection-btn');
     const moduleSelection = document.getElementById('module-selection');
+    const moduleContainer = document.getElementById('module-container');
     const moduleView = document.getElementById('module-view');
     const moduleTitle = document.getElementById('module-title');
     const submitAnswersBtn = document.getElementById('submit-answers-btn');
@@ -100,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         welcomeScreen.classList.add('hidden');
         mainApp.classList.remove('hidden');
         moduleSelection.classList.remove('hidden');
-        moduleView.classList.add('hidden');
+        moduleContainer.classList.add('hidden');
         welcomeMessage.textContent = `Welcome, ${profile.name}!`;
         profileSelectionModal.classList.add('hidden');
         exitToProfileBtn.classList.remove('hidden'); // Show the exit button
@@ -108,8 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function selectModule(moduleType) {
         moduleSelection.classList.add('hidden');
-        moduleView.classList.remove('hidden');
-        moduleTitle.textContent = moduleType.charAt(0).toUpperCase() + moduleType.slice(1);
+        moduleContainer.classList.remove('hidden');
+        backBtn.classList.remove('hidden');
         
         resetModuleView();
         showLoader();
@@ -123,7 +127,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const cleanedResult = result.replace(/```json/g, '').replace(/```/g, '').trim();
             const parsedResult = JSON.parse(cleanedResult);
             questionsData = parsedResult.questions;
-            displayModuleContent(parsedResult);
+            displayModuleContent(moduleTitle.textContent, parsedResult.story, markdownConverter);
+            displayQuestions(questionsData);
         } catch (error) {
             console.error("Failed to parse JSON from API:", error);
             displayError("Oops! Something went wrong. Could not load the module content. Please try again.");
@@ -268,8 +273,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     backBtn.addEventListener('click', () => {
-        moduleView.classList.add('hidden');
+        moduleContainer.classList.add('hidden');
         moduleSelection.classList.remove('hidden');
+        backBtn.classList.add('hidden');
     });
 
     submitAnswersBtn.addEventListener('click', checkAnswers);

@@ -1,3 +1,5 @@
+import { getPrompt } from './prompts.js';
+
 // This file will contain the logic for interacting with the Gemini API.
 
 // --- Safe Local Storage Wrappers ---
@@ -257,43 +259,13 @@ export async function generateMathProblem(profile) {
 }
 
 export async function generateLogicPuzzle(profile) {
-    const apiKey = getApiKey();
-    if (!apiKey) {
-        console.error('API key not found. Please set your API key.');
-        return 'API key not found. Please set your API key.';
-    }
-
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateLogicPuzzle?key=${apiKey}`;
-
+    const prompt = getPrompt(profile.age, 'logic');
+    const rawContent = await generateContent(prompt);
     try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                profile: profile,
-            })
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error('API Error:', errorData);
-            const errorMessage = errorData?.error?.message || `HTTP error! status: ${response.status}`;
-            return `Error generating logic puzzle: ${errorMessage}`;
-        }
-
-        const data = await response.json();
-        
-        if (data.puzzle) {
-            return data.puzzle;
-        } else {
-            console.error('Unexpected API response format:', data);
-            return 'Could not parse logic puzzle from API response.';
-        }
-
+        const parsedContent = JSON.parse(rawContent);
+        return parsedContent;
     } catch (error) {
-        console.error('Fetch Error:', error);
-        return `An error occurred while trying to generate logic puzzle: ${error.message}`;
+        console.error('Error parsing logic puzzle content:', error);
+        return { story: "", questions: [] };
     }
 }

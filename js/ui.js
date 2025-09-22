@@ -102,6 +102,7 @@ export function displayModuleContent(title, content, markdownConverter) {
 }
 
 export function displayQuestions(questions) {
+    questionsContainer.classList.remove('hidden');
     renderQuestions(questions);
     submitAnswersBtn.classList.remove('hidden');
 }

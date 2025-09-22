@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bodhi</title>
+    <title>Bodhi 🌱</title>
     <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="assets/images/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
@@ -31,7 +31,10 @@
             </div>
 
             <div id="main-app" class="hidden">
-                <h2 id="welcome-message"></h2>
+                <div class="app-header">
+                    <button id="back-btn" class="btn-secondary hidden">⬅️ Back</button>
+                    <h2 id="welcome-message"></h2>
+                </div>
                 <div id="module-selection" class="card">
                     <h3>Choose Your Adventure!</h3>
                     <div class="module-buttons">
@@ -40,16 +43,17 @@
                         <button class="module-btn" data-module="logic">🧠 Logic</button>
                     </div>
                 </div>
-                <div id="module-view" class="card hidden">
-                    <button id="back-btn" class="btn-secondary">⬅️ Back to Modules</button>
-                    <h3 id="module-title"></h3>
-                    <div class="loader"></div>
-                    <div id="story-content"></div>
-                    <div id="questions-container"></div>
-                    <div id="score-container" class="hidden">
-                        <h4>Your Score: <span id="score">0</span></h4>
+                <div id="module-container" class="hidden">
+                    <div id="module-view" class="card">
+                        <h3 id="module-title"></h3>
+                        <div class="loader"></div>
+                        <div id="story-content"></div>
+                        <div id="questions-container"></div>
+                        <div id="score-container" class="hidden">
+                            <h4>Your Score: <span id="score">0</span></h4>
+                        </div>
+                        <button id="submit-answers-btn" class="btn-primary hidden">Submit Answers</button>
                     </div>
-                    <button id="submit-answers-btn" class="btn-primary hidden">Submit Answers</button>
                 </div>
             </div>
         </div>
