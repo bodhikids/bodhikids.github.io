@@ -21,6 +21,7 @@ import {
     resetModuleView,
     updateScore
 } from './ui.js';
+import { saveProgress, renderProgressStats } from './progress.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Element Selections ---
@@ -187,6 +188,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         updateScore(score, questionsData.length);
+
+        // Save progress after calculating the score
+        if (currentProfile) {
+            saveProgress(currentProfile.name, currentModule, score, questionsData.length);
+        }
     }
 
     // --- Parental Gate Logic ---
@@ -281,8 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     settingsFab.addEventListener('click', () => {
         openParentalGate(() => {
-            apiKeyInput.value = getApiKey() || ''; // Load existing key into input
+            apiKeyInput.value = getApiKey() || '';
             renderProfilesForSettings(profiles, editProfile, deleteProfile);
+            updateProgressProfileSelect(); // Add this line
             settingsModal.classList.remove('hidden');
             checkSafari();
         });
@@ -311,8 +318,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateModuleVisibility() {
         const age = currentProfile ? parseInt(currentProfile.age, 10) : 0;
         document.querySelector('[data-module="rhyming"]').style.display = age >= 4 && age <= 7 ? 'block' : 'none';
-        document.querySelector('[data-module="spelling"]').style.display = age >= 6 && age <= 10 ? 'block' : 'none';
-        document.querySelector('[data-module="emoji-riddles"]').style.display = age >= 6 ? 'block' : 'none';
+        document.querySelector('[data-module="spelling"]').style.display = age >= 5 && age <= 10 ? 'block' : 'none';
+        document.querySelector('[data-module="emoji-riddles"]').style.display = age >= 5 ? 'block' : 'none';
     }
 
     submitAnswersBtn.addEventListener('click', checkAnswers);
@@ -348,6 +355,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeBannerBtn.addEventListener('click', () => {
         addToHomeScreenBanner.classList.add('hidden');
+    });
+
+    // --- Progress Elements ---
+    const progressProfileSelect = document.getElementById('progress-profile-select');
+    const progressStats = document.getElementById('progress-stats');
+
+    function updateProgressProfileSelect() {
+        progressProfileSelect.innerHTML = '<option value="">Select a profile</option>';
+        profiles.forEach(profile => {
+            const option = document.createElement('option');
+            option.value = profile.name;
+            option.textContent = profile.name;
+            progressProfileSelect.appendChild(option);
+        });
+    }
+
+    progressProfileSelect.addEventListener('change', (e) => {
+        const selectedProfile = e.target.value;
+        if (selectedProfile) {
+            renderProgressStats(selectedProfile, progressStats);
+        } else {
+            progressStats.innerHTML = '';
+        }
     });
 
     // --- Initial Page Load ---
