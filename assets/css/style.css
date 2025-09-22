@@ -9,7 +9,7 @@
 
 body {
     font-family: var(--font-family);
-    background: linear-gradient(135deg, #ffc300, #ff8c00);
+    background: var(--secondary-color);
     color: var(--text-color);
     margin: 0;
     padding: 20px;
@@ -61,6 +61,7 @@ body {
     max-width: 800px;
     text-align: center;
     z-index: 1;
+    padding-top: env(safe-area-inset-top);
 }
 
 header h1 {
