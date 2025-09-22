@@ -9,7 +9,7 @@ const AGE_RANGES = {
 
 // Module visibility rules
 const MODULE_RULES = {
-    reading: { minAge: 1, maxAge: 7 },
+    reading: { minAge: 4, maxAge: 9 },
     math: { minAge: 1, maxAge: 15 },
     logic: { minAge: 1, maxAge: 15 },
     rhyming: { minAge: 4, maxAge: 7 },
@@ -113,12 +113,6 @@ export function getPrompt(age, moduleType) {
         }
     } else if (moduleType === 'reading') {
         switch (ageRange) {
-            case AGE_RANGES.TODDLER:
-                prompt = `Create a simple object/animal recognition module for a toddler (age ${age}).
-                ${baseJsonStructure}
-                - The "story" should be a very short, one or two-sentence story using simple words and emojis. Example: "The little duck 🦆 says quack!"
-                - The "questions" should be 3-4 simple questions about the story, focusing on recognition. Example: "What animal did you read about?"`;
-                break;
             case AGE_RANGES.PRESCHOOL:
                 prompt = `Create a short story comprehension module for a young child (age ${age}).
                 ${baseJsonStructure}
