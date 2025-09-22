@@ -23,6 +23,7 @@ import {
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Element Selections ---
+    const header = document.querySelector('header');
     const welcomeScreen = document.getElementById('welcome-screen');
     const mainApp = document.getElementById('main-app');
     const selectProfileBtn = document.getElementById('select-profile-btn');
@@ -101,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function selectProfile(profile) {
         currentProfile = profile;
+        header.classList.add('hidden');
         welcomeScreen.classList.add('hidden');
         mainApp.classList.remove('hidden');
         moduleSelection.classList.remove('hidden');
@@ -263,6 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
         openParentalGate(() => {
             mainApp.classList.add('hidden');
             welcomeScreen.classList.remove('hidden');
+            header.classList.remove('hidden');
             currentProfile = null;
             exitToProfileBtn.classList.add('hidden'); // Hide the exit button
         });
