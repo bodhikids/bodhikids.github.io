@@ -135,7 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'emoji-riddles': '🤔 Emoji Riddles',
             'coding': '💻 Code Breakers',
             'ai': '🤖 AI Explorers',
-            'science': '🔬 Science Lab'
+            'science': '🔬 Science Lab',
+            'phonics': '🗣️ Phonics Fun'
         };
         moduleTitle.textContent = moduleTitles[moduleType] || moduleType.charAt(0).toUpperCase() + moduleType.slice(1);
 

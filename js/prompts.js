@@ -9,15 +9,16 @@ const AGE_RANGES = {
 
 // Module visibility rules
 const MODULE_RULES = {
-    reading: { minAge: 1, maxAge: 12 },
-    math: { minAge: 1, maxAge: 12 },
-    logic: { minAge: 1, maxAge: 12 },
+    reading: { minAge: 1, maxAge: 7 },
+    math: { minAge: 1, maxAge: 15 },
+    logic: { minAge: 1, maxAge: 15 },
     rhyming: { minAge: 4, maxAge: 7 },
-    spelling: { minAge: 5, maxAge: 10 },
-    'emoji-riddles': { minAge: 5, maxAge: 12 },
+    spelling: { minAge: 10, maxAge: 15 },
+    'emoji-riddles': { minAge: 5, maxAge: 7 },
     coding: { minAge: 5, maxAge: 15 },
     ai: { minAge: 5, maxAge: 15 },
-    science: { minAge: 5, maxAge: 15 }
+    science: { minAge: 5, maxAge: 15 },
+    phonics: { minAge: 3, maxAge: 7 }
 };
 
 export function getAgeRange(age) {
@@ -130,12 +131,6 @@ export function getPrompt(age, moduleType) {
                 - The "story" should be a short paragraph with some more complex words.
                 - The "questions" should be 4-6 questions. They should test comprehension and ask about the meaning of one or two words from the story.`;
                 break;
-            case AGE_RANGES.PRETEEN:
-                prompt = `Create a reading module with a focus on inference for a pre-teen (age ${age}).
-                ${baseJsonStructure}
-                - The "story" should be a short, complex narrative that requires the reader to infer character feelings or motivations.
-                - The "questions" should include 4-6 questions about what happened and why characters might have done certain things, focusing on deeper inference.`;
-                break;
         }
     } else if (moduleType === 'rhyming') {
         prompt = `Create a rhyming words module for a child (age ${age}).
@@ -216,6 +211,27 @@ export function getPrompt(age, moduleType) {
                 ${baseJsonStructure}
                 - The "story" should be a title like "## Science Investigators! 🔬".
                 - The "questions" should be 5-7 questions about topics like the solar system, basic chemistry, or the scientific method. Example: "What is the force that keeps us on the ground?", with options like "Magnetism", "Gravity", "Friction", "Electricity".`;
+                break;
+        }
+    } else if (moduleType === 'phonics') {
+        switch (ageRange) {
+            case AGE_RANGES.TODDLER: // Age 3
+                prompt = `Create a "letter sounds" module for a toddler (age ${age}).
+                ${baseJsonStructure}
+                - The "story" should be a title like "## ABC Sound Party! 🎉".
+                - The "questions" should be 4-5 questions asking for the sound a letter makes. Use emojis. Example: "The letter 'S' makes a sound like a...", with options like "Snake 🐍", "Lion 🦁", "Duck 🦆".`;
+                break;
+            case AGE_RANGES.PRESCHOOL: // Ages 4-6
+                prompt = `Create a "blending sounds" phonics module for a young child (age ${age}).
+                ${baseJsonStructure}
+                - The "story" should be a title like "## Let's Make Words! 🧩".
+                - The "questions" should be 5-6 questions asking the child to blend simple CVC (consonant-vowel-consonant) words. Example: "What word do the sounds /c/ /a/ /t/ make?", with options like "mat", "cat", "bat".`;
+                break;
+            case AGE_RANGES.SCHOOL: // Age 7
+                prompt = `Create a phonics module on "digraphs" (like sh, ch, th) for a child (age ${age}).
+                ${baseJsonStructure}
+                - The "story" should be a title like "## Super Sounds! 🦸".
+                - The "questions" should be 5-6 questions asking to identify words with specific digraphs. Example: "Which of these words has the 'sh' sound?", with options like "ship", "chair", "thumb".`;
                 break;
         }
     }
