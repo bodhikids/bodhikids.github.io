@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const moduleTitle = document.getElementById('module-title');
     const submitAnswersBtn = document.getElementById('submit-answers-btn');
     const backBtn = document.getElementById('back-btn');
+    const tabBtns = document.querySelectorAll('.tab-btn');
     const moduleBtns = document.querySelectorAll('.module-btn');
     const exitToProfileBtn = document.getElementById('exit-to-profile-btn');
 
@@ -178,6 +179,12 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
+    const CATEGORIES = {
+        school: ['reading', 'math', 'logic', 'science'],
+        word: ['rhyming', 'spelling', 'phonics', 'emoji-riddles'],
+        tech: ['coding', 'ai']
+    };
+
     // --- Core Logic ---
 
     function selectProfile(profile) {
@@ -190,7 +197,11 @@ document.addEventListener('DOMContentLoaded', () => {
         welcomeMessage.textContent = `Welcome, ${profile.name}!`;
         profileSelectionModal.classList.add('hidden');
         exitToProfileBtn.classList.remove('hidden'); // Show the exit button
-        updateModuleVisibility();
+        
+        // Reset to the first tab and update module visibility
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabBtns[0].classList.add('active');
+        updateModuleVisibility('school');
     }
 
     function showThemeSelection(moduleType) {
@@ -433,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     moduleBtns.forEach(btn => {
-        btn.addEventListener('click', () => selectModule(btn.dataset.module));
+        btn.addEventListener('click', () => showThemeSelection(btn.dataset.module));
     });
 
     backBtn.addEventListener('click', () => {
@@ -450,13 +461,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function updateModuleVisibility() {
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            updateModuleVisibility(btn.dataset.category);
+        });
+    });
+
+    function updateModuleVisibility(category) {
         const age = currentProfile ? parseInt(currentProfile.age, 10) : 0;
         const availableModules = getAvailableModules(age);
-        
+        const categoryModules = CATEGORIES[category];
+
         moduleBtns.forEach(btn => {
             const moduleType = btn.dataset.module;
-            btn.style.display = availableModules[moduleType] ? 'block' : 'none';
+            const isInCategory = categoryModules.includes(moduleType);
+            const isAvailableForAge = availableModules[moduleType];
+
+            btn.style.display = isInCategory && isAvailableForAge ? 'block' : 'none';
         });
     }
 
