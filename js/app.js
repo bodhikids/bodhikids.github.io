@@ -189,6 +189,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateScore(score, questionsData.length);
 
+        // If score is 100%, trigger confetti
+        if (score === questionsData.length) {
+            window.confetti({
+                particleCount: 150,
+                spread: 180,
+                origin: { y: 0.6 }
+            });
+        }
+
         // Save progress after calculating the score
         if (currentProfile) {
             saveProgress(currentProfile.name, currentModule, score, questionsData.length);
