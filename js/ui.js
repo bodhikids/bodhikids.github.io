@@ -50,6 +50,14 @@ export function renderProfilesForKids(profiles, selectProfileCallback) {
     });
 }
 
+function createSpeakerButton(textToSpeak) {
+    const speakButton = document.createElement('button');
+    speakButton.className = 'speak-btn';
+    speakButton.textContent = '🔊';
+    speakButton.addEventListener('click', () => speak(textToSpeak));
+    return speakButton;
+}
+
 function renderQuestions(questions) {
     questionsContainer.innerHTML = '';
     questions.forEach((q, index) => {
@@ -97,6 +105,53 @@ function speak(text) {
   speechSynthesis.speak(utterance);
 }
 
+export function displayPhonicsModule(questions) {
+    questionsContainer.innerHTML = '';
+    questions.forEach((q, index) => {
+        const questionCard = document.createElement('div');
+        questionCard.className = 'question-card';
+        questionCard.dataset.questionIndex = index;
+
+        const questionHeader = document.createElement('div');
+        questionHeader.className = 'question-header';
+
+        const questionNumber = document.createElement('span');
+        questionNumber.className = 'question-number';
+        questionNumber.textContent = `${index + 1}.`;
+
+        const questionText = document.createElement('p');
+        questionText.className = 'question-text';
+        questionText.textContent = q.question;
+
+        const speakButton = createSpeakerButton(q.speak);
+
+        questionHeader.appendChild(questionNumber);
+        questionHeader.appendChild(questionText);
+        questionHeader.appendChild(speakButton);
+        questionCard.appendChild(questionHeader);
+
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className = 'options';
+
+        q.options.forEach((option, optionIndex) => {
+            const optionElement = document.createElement('div');
+            optionElement.className = 'option';
+            optionElement.textContent = option;
+            optionElement.dataset.optionIndex = optionIndex;
+            optionElement.addEventListener('click', () => {
+                questionCard.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                optionElement.classList.add('selected');
+            });
+            optionsContainer.appendChild(optionElement);
+        });
+
+        questionCard.appendChild(optionsContainer);
+        questionsContainer.appendChild(questionCard);
+    });
+    questionsContainer.classList.remove('hidden');
+    submitAnswersBtn.classList.remove('hidden');
+}
+
 export function displaySpellingModule(words) {
   questionsContainer.innerHTML = '';
   words.forEach((wordData, index) => {
@@ -115,10 +170,7 @@ export function displaySpellingModule(words) {
     questionText.className = 'question-text';
     questionText.textContent = `Spell the word:`;
 
-    const speakButton = document.createElement('button');
-    speakButton.className = 'speak-btn';
-    speakButton.textContent = '🔊';
-    speakButton.addEventListener('click', () => speak(wordData.word));
+    const speakButton = createSpeakerButton(wordData.word);
 
     questionHeader.appendChild(questionNumber);
     questionHeader.appendChild(questionText);

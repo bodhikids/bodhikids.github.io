@@ -208,24 +208,28 @@ export function getPrompt(age, moduleType) {
                 break;
         }
     } else if (moduleType === 'phonics') {
+        const phonicsJsonStructure = `Please provide the output in a single, valid JSON object with two keys: "story" and "questions".
+- The "story" should be in Markdown format.
+- The "questions" should be an array of objects, where each object has "question", "options" (an array of 4 strings), "answer" (the 0-based index of the correct option), and "speak" (the single letter, sound, or word to be spoken).`;
+
         switch (ageRange) {
             case AGE_RANGES.TODDLER: // Age 3
                 prompt = `Create a "letter sounds" module for a toddler (age ${age}).
-                ${baseJsonStructure}
+                ${phonicsJsonStructure}
                 - The "story" should be a title like "## ABC Sound Party! 🎉".
-                - The "questions" should be 4-5 questions asking for the sound a letter makes. Use emojis. Example: "The letter 'S' makes a sound like a...", with options like "Snake 🐍", "Lion 🦁", "Duck 🦆".`;
+                - The "questions" should be 4-5 questions asking for the sound a letter makes. Use emojis. Example: "The letter 'S' makes a sound like a...", with options like "Snake 🐍", "Lion 🦁", "Duck 🦆". The "speak" field should contain just the letter, e.g., "S".`;
                 break;
             case AGE_RANGES.PRESCHOOL: // Ages 4-6
                 prompt = `Create a "blending sounds" phonics module for a young child (age ${age}).
-                ${baseJsonStructure}
+                ${phonicsJsonStructure}
                 - The "story" should be a title like "## Let's Make Words! 🧩".
-                - The "questions" should be 5-6 questions asking the child to blend simple CVC (consonant-vowel-consonant) words. Example: "What word do the sounds /c/ /a/ /t/ make?", with options like "mat", "cat", "bat".`;
+                - The "questions" should be 5-6 questions asking the child to blend simple CVC (consonant-vowel-consonant) words. Example: "What word do the sounds /c/ /a/ /t/ make?", with options like "mat", "cat", "bat". The "speak" field should contain the word, e.g., "cat".`;
                 break;
             case AGE_RANGES.SCHOOL: // Age 7
                 prompt = `Create a phonics module on "digraphs" (like sh, ch, th) for a child (age ${age}).
-                ${baseJsonStructure}
+                ${phonicsJsonStructure}
                 - The "story" should be a title like "## Super Sounds! 🦸".
-                - The "questions" should be 5-6 questions asking to identify words with specific digraphs. Example: "Which of these words has the 'sh' sound?", with options like "ship", "chair", "thumb".`;
+                - The "questions" should be 5-6 questions asking to identify words with specific digraphs. Example: "Which of these words has the 'sh' sound?", with options like "ship", "chair", "thumb". The "speak" field should contain the digraph sound, e.g., "sh".`;
                 break;
         }
     }

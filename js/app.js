@@ -15,6 +15,7 @@ import {
     displayModuleContent,
     displayQuestions,
     displaySpellingModule,
+    displayPhonicsModule,
     displayError,
     showLoader,
     hideLoader,
@@ -154,6 +155,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (moduleType === 'spelling') {
                 questionsData = parsedResult.words.map(word => ({ word }));
                 displaySpellingModule(questionsData);
+            } else if (moduleType === 'phonics') {
+                questionsData = parsedResult.questions;
+                displayPhonicsModule(questionsData);
             } else {
                 questionsData = parsedResult.questions;
                 displayQuestions(questionsData);
