@@ -1,4 +1,13 @@
 import {
+    getApiKey,
+    setApiKey,
+    generateStory,
+    generateQuestions,
+    generateAnswerExplanations,
+    generateMathProblem,
+    generateLogicPuzzle
+} from './gemini.js';
+import {
     renderProfilesForSettings,
     renderProfilesForKids,
     displayModuleContent,
@@ -53,6 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const editAgeInput = document.getElementById('edit-age');
     const saveEditProfileBtn = document.getElementById('save-edit-profile-btn');
     const safariHomescreenInfo = document.getElementById('safari-homescreen-info');
+
+    const markdownConverter = new showdown.Converter();
 
     // --- Safe Local Storage Wrappers ---
     function safeLocalStorageSet(key, value) {

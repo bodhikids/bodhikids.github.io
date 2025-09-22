@@ -8,7 +8,6 @@ const scoreContainer = document.getElementById('score-container');
 const scoreDisplay = document.getElementById('score');
 const submitAnswersBtn = document.getElementById('submit-answers-btn');
 const loader = document.querySelector('#module-view .loader');
-const markdownConverter = new showdown.Converter();
 
 export function renderProfilesForSettings(profiles, editProfileCallback, deleteProfileCallback) {
     profilesListSettings.innerHTML = '';
@@ -93,9 +92,17 @@ function renderQuestions(questions) {
     });
 }
 
-export function displayModuleContent(parsedResult) {
-    storyContent.innerHTML = markdownConverter.makeHtml(parsedResult.story);
-    renderQuestions(parsedResult.questions);
+export function displayModuleContent(title, content, markdownConverter) {
+    document.getElementById('module-title').textContent = title;
+    storyContent.innerHTML = markdownConverter.makeHtml(content);
+    storyContent.classList.remove('hidden');
+    questionsContainer.classList.add('hidden');
+    scoreContainer.classList.add('hidden');
+    submitAnswersBtn.classList.add('hidden');
+}
+
+export function displayQuestions(questions) {
+    renderQuestions(questions);
     submitAnswersBtn.classList.remove('hidden');
 }
 
