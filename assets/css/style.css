@@ -37,6 +37,15 @@ body {
     animation: float 20s linear infinite;
 }
 
+.emoji {
+    position: absolute;
+    list-style: none;
+    display: block;
+    font-size: 2em;
+    animation: float 20s linear infinite;
+    bottom: -150px; /* Start emojis from the bottom */
+}
+
 .shape1 { width: 20px; height: 20px; left: 10%; bottom: -150px; animation-duration: 18s; }
 .shape2 { width: 80px; height: 80px; left: 25%; bottom: -150px; animation-duration: 12s; }
 .shape3 { width: 150px; height: 150px; left: 50%; bottom: -150px; animation-duration: 25s; }
