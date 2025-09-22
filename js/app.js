@@ -45,6 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeSelection = document.getElementById('theme-selection');
     const themeSelectionTitle = document.getElementById('theme-selection-title');
     const themeButtonsContainer = document.getElementById('theme-buttons');
+    const difficultySlider = document.getElementById('difficulty');
+    const difficultyLabel = document.getElementById('difficulty-label');
     const moduleContainer = document.getElementById('module-container');
     const moduleView = document.getElementById('module-view');
     const moduleTitle = document.getElementById('module-title');
@@ -101,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentProfile = null;
     let currentModule = null;
     let currentTheme = null;
+    let difficultyLevel = 1;
     let questionsData = [];
     let parentalCheckAnswer = 0;
     let onParentalCheckSuccess = null;
@@ -258,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         moduleTitle.textContent = moduleTitles[moduleType] || moduleType.charAt(0).toUpperCase() + moduleType.slice(1);
 
-        const prompt = getPrompt(currentProfile.age, moduleType, currentTheme);
+        const prompt = getPrompt(currentProfile.age, moduleType, currentTheme, difficultyLevel);
         const result = await generateContent(prompt);
         
         hideLoader();
@@ -413,6 +416,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeEditModalBtn.addEventListener('click', () => {
         editProfileModal.classList.add('hidden');
+    });
+
+    difficultySlider.addEventListener('input', () => {
+        difficultyLevel = difficultySlider.value;
+        difficultyLabel.textContent = difficultyLevel;
     });
 
     // --- Settings Listeners ---
