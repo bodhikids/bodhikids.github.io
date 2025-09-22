@@ -308,6 +308,24 @@ input[type="text"], input[type="number"] {
     font-size: 1.1em;
 }
 
+.speak-btn {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.spelling-input {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1em;
+    font-family: var(--font-family);
+}
+
 .options {
     display: flex;
     flex-direction: column;

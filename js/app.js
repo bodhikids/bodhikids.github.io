@@ -14,6 +14,7 @@ import {
     renderProfilesForKids,
     displayModuleContent,
     displayQuestions,
+    displaySpellingModule,
     displayError,
     showLoader,
     hideLoader,
@@ -93,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Application State ---
     let profiles = JSON.parse(safeLocalStorageGet('profiles')) || [];
     let currentProfile = null;
+    let currentModule = null;
     let questionsData = [];
     let parentalCheckAnswer = 0;
     let onParentalCheckSuccess = null;
@@ -110,9 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
         welcomeMessage.textContent = `Welcome, ${profile.name}!`;
         profileSelectionModal.classList.add('hidden');
         exitToProfileBtn.classList.remove('hidden'); // Show the exit button
+        updateModuleVisibility();
     }
 
     async function selectModule(moduleType) {
+        currentModule = moduleType;
         moduleSelection.classList.add('hidden');
         moduleContainer.classList.remove('hidden');
         backBtn.classList.remove('hidden');
@@ -128,9 +132,16 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const cleanedResult = result.replace(/```json/g, '').replace(/```/g, '').trim();
             const parsedResult = JSON.parse(cleanedResult);
-            questionsData = parsedResult.questions;
+
             displayModuleContent(moduleTitle.textContent, parsedResult.story, markdownConverter);
-            displayQuestions(questionsData);
+
+            if (moduleType === 'spelling') {
+                questionsData = parsedResult.words.map(word => ({ word }));
+                displaySpellingModule(questionsData);
+            } else {
+                questionsData = parsedResult.questions;
+                displayQuestions(questionsData);
+            }
         } catch (error) {
             console.error("Failed to parse JSON from API:", error);
             displayError("Oops! Something went wrong. Could not load the module content. Please try again.");
@@ -141,23 +152,39 @@ document.addEventListener('DOMContentLoaded', () => {
         let score = 0;
         const questionCards = document.querySelectorAll('.question-card');
 
-        questionCards.forEach(card => {
-            const questionIndex = parseInt(card.dataset.questionIndex, 10);
-            const selectedOption = card.querySelector('.option.selected');
-            
-            if (selectedOption) {
-                const selectedAnswerIndex = parseInt(selectedOption.dataset.optionIndex, 10);
-                const correctAnswerIndex = questionsData[questionIndex].answer;
+        if (currentModule === 'spelling') {
+            questionCards.forEach(card => {
+                const questionIndex = parseInt(card.dataset.questionIndex, 10);
+                const input = card.querySelector('.spelling-input');
+                const correctAnswer = questionsData[questionIndex].word;
 
-                if (selectedAnswerIndex === correctAnswerIndex) {
+                if (input.value.toLowerCase() === correctAnswer.toLowerCase()) {
                     score++;
                     card.classList.add('correct');
                 } else {
                     card.classList.add('incorrect');
                 }
-            }
-            card.querySelectorAll('.option').forEach(opt => opt.style.pointerEvents = 'none');
-        });
+                input.disabled = true;
+            });
+        } else {
+            questionCards.forEach(card => {
+                const questionIndex = parseInt(card.dataset.questionIndex, 10);
+                const selectedOption = card.querySelector('.option.selected');
+                
+                if (selectedOption) {
+                    const selectedAnswerIndex = parseInt(selectedOption.dataset.optionIndex, 10);
+                    const correctAnswerIndex = questionsData[questionIndex].answer;
+
+                    if (selectedAnswerIndex === correctAnswerIndex) {
+                        score++;
+                        card.classList.add('correct');
+                    } else {
+                        card.classList.add('incorrect');
+                    }
+                }
+                card.querySelectorAll('.option').forEach(opt => opt.style.pointerEvents = 'none');
+            });
+        }
 
         updateScore(score, questionsData.length);
     }
@@ -280,6 +307,13 @@ document.addEventListener('DOMContentLoaded', () => {
         moduleSelection.classList.remove('hidden');
         backBtn.classList.add('hidden');
     });
+
+    function updateModuleVisibility() {
+        const age = currentProfile ? parseInt(currentProfile.age, 10) : 0;
+        document.querySelector('[data-module="rhyming"]').style.display = age >= 4 && age <= 7 ? 'block' : 'none';
+        document.querySelector('[data-module="spelling"]').style.display = age >= 6 && age <= 10 ? 'block' : 'none';
+        document.querySelector('[data-module="emoji-riddles"]').style.display = age >= 6 ? 'block' : 'none';
+    }
 
     submitAnswersBtn.addEventListener('click', checkAnswers);
 

@@ -76,7 +76,7 @@ export function getPrompt(age, moduleType) {
                 - The "questions" should be 4-6 challenging problems that require breaking down a task into a logical sequence of steps. Example: "You want to make a robot draw a square. What is the correct sequence of commands?", with options showing different orders of 'pen down', 'move forward', 'turn right', 'pen up'.`;
                 break;
         }
-    } else { // Reading module
+    } else if (moduleType === 'reading') {
         switch (ageRange) {
             case '1-3':
                 prompt = `Create a simple object/animal recognition module for a toddler (age ${age}).
@@ -104,6 +104,21 @@ export function getPrompt(age, moduleType) {
                 - The "questions" should include 4-6 questions about what happened and why characters might have done certain things, focusing on deeper inference.`;
                 break;
         }
+    } else if (moduleType === 'rhyming') {
+        prompt = `Create a rhyming words module for a child (age ${age}).
+        ${baseJsonStructure}
+        - The "story" should be a title like "## Rhyme Time! 🎤".
+        - The "questions" should be 5-7 questions asking to find a word that rhymes with a given word. Example: "Which word rhymes with 'cat'?", with options like "hat", "dog", "sun".`;
+    } else if (moduleType === 'spelling') {
+        prompt = `Create a spelling bee module for a child (age ${age}).
+        Please provide the output in a single, valid JSON object with two keys: "story" and "words".
+        - The "story" should be a title like "## Spelling Bee! 🐝".
+        - The "words" should be an array of exactly 5 age-appropriate spelling words.`;
+    } else if (moduleType === 'emoji-riddles') {
+        prompt = `Create an emoji riddles module for a child (age ${age}).
+        ${baseJsonStructure}
+        - The "story" should be a title like "## Emoji Riddles! 🤔".
+        - The "questions" should be 5-7 riddles made of emojis. The answer should be a common object or animal. Example: "I am yellow, I grow on trees, and monkeys love me. 🍌", with the question "What am I?".`;
     }
     return prompt;
 }

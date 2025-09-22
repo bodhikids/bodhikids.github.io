@@ -92,13 +92,57 @@ function renderQuestions(questions) {
     });
 }
 
+function speak(text) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(utterance);
+}
+
+export function displaySpellingModule(words) {
+  questionsContainer.innerHTML = '';
+  words.forEach((wordData, index) => {
+    const questionCard = document.createElement('div');
+    questionCard.className = 'question-card';
+    questionCard.dataset.questionIndex = index;
+
+    const questionHeader = document.createElement('div');
+    questionHeader.className = 'question-header';
+
+    const questionNumber = document.createElement('span');
+    questionNumber.className = 'question-number';
+    questionNumber.textContent = `${index + 1}.`;
+
+    const questionText = document.createElement('p');
+    questionText.className = 'question-text';
+    questionText.textContent = `Spell the word:`;
+
+    const speakButton = document.createElement('button');
+    speakButton.className = 'speak-btn';
+    speakButton.textContent = '🔊';
+    speakButton.addEventListener('click', () => speak(wordData.word));
+
+    questionHeader.appendChild(questionNumber);
+    questionHeader.appendChild(questionText);
+    questionHeader.appendChild(speakButton);
+    questionCard.appendChild(questionHeader);
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'spelling-input';
+    questionCard.appendChild(input);
+
+    questionsContainer.appendChild(questionCard);
+  });
+  questionsContainer.classList.remove('hidden');
+  submitAnswersBtn.classList.remove('hidden');
+}
+
 export function displayModuleContent(title, content, markdownConverter) {
-    document.getElementById('module-title').textContent = title;
-    storyContent.innerHTML = markdownConverter.makeHtml(content);
-    storyContent.classList.remove('hidden');
-    questionsContainer.classList.add('hidden');
-    scoreContainer.classList.add('hidden');
-    submitAnswersBtn.classList.add('hidden');
+  document.getElementById('module-title').textContent = title;
+  storyContent.innerHTML = markdownConverter.makeHtml(content);
+  storyContent.classList.remove('hidden');
+  questionsContainer.classList.add('hidden');
+  scoreContainer.classList.add('hidden');
+  submitAnswersBtn.classList.add('hidden');
 }
 
 export function displayQuestions(questions) {
