@@ -3,7 +3,8 @@ const AGE_RANGES = {
     TODDLER: '1-3',
     PRESCHOOL: '4-6',
     SCHOOL: '7-9',
-    PRETEEN: '10-12'
+    PRETEEN: '10-12',
+    TEEN: '13-15'
 };
 
 // Module visibility rules
@@ -13,7 +14,10 @@ const MODULE_RULES = {
     logic: { minAge: 1, maxAge: 12 },
     rhyming: { minAge: 4, maxAge: 7 },
     spelling: { minAge: 5, maxAge: 10 },
-    'emoji-riddles': { minAge: 5, maxAge: 12 }
+    'emoji-riddles': { minAge: 5, maxAge: 12 },
+    coding: { minAge: 5, maxAge: 15 },
+    ai: { minAge: 5, maxAge: 15 },
+    science: { minAge: 5, maxAge: 15 }
 };
 
 export function getAgeRange(age) {
@@ -21,6 +25,7 @@ export function getAgeRange(age) {
     if (age >= 4 && age <= 6) return AGE_RANGES.PRESCHOOL;
     if (age >= 7 && age <= 9) return AGE_RANGES.SCHOOL;
     if (age >= 10 && age <= 12) return AGE_RANGES.PRETEEN;
+    if (age >= 13 && age <= 15) return AGE_RANGES.TEEN;
     return '';
 }
 
@@ -147,6 +152,72 @@ export function getPrompt(age, moduleType) {
         ${baseJsonStructure}
         - The "story" should be a title like "## Emoji Riddles! 🤔".
         - The "questions" should be 5-7 riddles made of emojis. The answer should be a common object or animal. Example: "I am yellow, I grow on trees, and monkeys love me. 🍌", with the question "What am I?".`;
+    } else if (moduleType === 'coding') {
+        switch (ageRange) {
+            case AGE_RANGES.PRESCHOOL: // Ages 5-6
+                prompt = `Create a very simple, visual coding logic module for a young child (age ${age}).
+                ${baseJsonStructure}
+                - The "story" should be a title like "## Tell the Robot What to Do! 🤖".
+                - The "questions" should be 4-5 questions about sequencing simple, real-world tasks. Use emojis heavily. Example: "To get a glass of juice, what is the FIRST step?", with options like "Drink the juice 🧃", "Pour the juice 🫗", "Get a cup 🥛".`;
+                break;
+            case AGE_RANGES.SCHOOL: // Ages 7-9
+                prompt = `Create a basic coding concepts module for a child (age ${age}) using analogies.
+                ${baseJsonStructure}
+                - The "story" should be a title like "## Code Puzzles! 🧩".
+                - The "questions" should be 5-6 questions explaining concepts like 'if/then' statements and 'loops' with simple stories. Example: "IF it's your birthday, THEN you get presents. It's your birthday today! What happens?", with options like "You give presents", "You get presents", "Nothing happens".`;
+                break;
+            case AGE_RANGES.PRETEEN:
+            case AGE_RANGES.TEEN: // Ages 10-15
+                prompt = `Create a language-independent coding concepts module for a child aged ${age}.
+                ${baseJsonStructure}
+                - The "story" should be a title like "## Code Breakers! 💻".
+                - The "questions" should be 5-7 questions about fundamental programming concepts like loops, conditionals, variables, and functions, using pseudocode or real-world analogies. Example: "A 'loop' in coding is like...", with options like "A straight line", "Doing something once", "Repeating an action", "A type of variable".`;
+                break;
+        }
+    } else if (moduleType === 'ai') {
+        switch (ageRange) {
+            case AGE_RANGES.PRESCHOOL: // Ages 5-6
+                prompt = `Create a very simple "what is AI?" module for a young child (age ${age}).
+                ${baseJsonStructure}
+                - The "story" should be a title like "## Smart Helpers! 🤖".
+                - The "questions" should be 4-5 questions using analogies to things they know. Example: "Which of these is like a smart helper that can learn?", with options like "A smart speaker that plays music you like", "A teddy bear", "A bicycle".`;
+                break;
+            case AGE_RANGES.SCHOOL: // Ages 7-9
+                prompt = `Create a basic AI concepts module for a child (age ${age}) explaining how AI learns.
+                ${baseJsonStructure}
+                - The "story" should be a title like "## How Do Computers Learn? 🤔".
+                - The "questions" should be 5-6 questions using simple examples. Example: "You show a computer many pictures of cats to teach it. This is called...", with options like "Guessing", "Training", "Drawing", "Playing".`;
+                break;
+            case AGE_RANGES.PRETEEN:
+            case AGE_RANGES.TEEN: // Ages 10-15
+                prompt = `Create an introductory module on different types of AI for a child aged ${age}.
+                ${baseJsonStructure}
+                - The "story" should be a title like "## Exploring AI Worlds! 🌍".
+                - The "questions" should be 5-7 questions about different AI applications. Example: "An AI that can understand and translate languages is a type of...", with options like "Image Recognition AI", "Game Playing AI", "Natural Language Processing AI", "Self-Driving Car AI".`;
+                break;
+        }
+    } else if (moduleType === 'science') {
+        switch (ageRange) {
+            case AGE_RANGES.PRESCHOOL: // Ages 5-6
+                prompt = `Create a simple science module about the natural world for a young child (age ${age}).
+                ${baseJsonStructure}
+                - The "story" should be a title like "## Nature Detectives! 🌳".
+                - The "questions" should be 4-5 questions about basic concepts like weather, plants, or animals. Example: "What do plants need to grow?", with options like "Sunlight and water", "Cookies and milk", "Toys and books".`;
+                break;
+            case AGE_RANGES.SCHOOL: // Ages 7-9
+                prompt = `Create a basic STEM concepts module for a child (age ${age}).
+                ${baseJsonStructure}
+                - The "story" should be a title like "## Fun Experiments! 🧪".
+                - The "questions" should be 5-6 questions about simple physics or biology. Example: "What happens to water when it gets very cold?", with options like "It turns to steam", "It turns to ice", "It disappears".`;
+                break;
+            case AGE_RANGES.PRETEEN:
+            case AGE_RANGES.TEEN: // Ages 10-15
+                prompt = `Create an introductory module on a core science topic for a child aged ${age}.
+                ${baseJsonStructure}
+                - The "story" should be a title like "## Science Investigators! 🔬".
+                - The "questions" should be 5-7 questions about topics like the solar system, basic chemistry, or the scientific method. Example: "What is the force that keeps us on the ground?", with options like "Magnetism", "Gravity", "Friction", "Electricity".`;
+                break;
+        }
     }
     return prompt;
 }

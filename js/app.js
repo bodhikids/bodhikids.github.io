@@ -125,6 +125,20 @@ document.addEventListener('DOMContentLoaded', () => {
         resetModuleView();
         showLoader();
 
+        // Set module title
+        const moduleTitles = {
+            'reading': '📚 Reading Adventure',
+            'math': '🧮 Math Challenge',
+            'logic': '🧠 Logic Puzzles',
+            'rhyming': '🎤 Rhyme Time',
+            'spelling': '🐝 Spelling Bee',
+            'emoji-riddles': '🤔 Emoji Riddles',
+            'coding': '💻 Code Breakers',
+            'ai': '🤖 AI Explorers',
+            'science': '🔬 Science Lab'
+        };
+        moduleTitle.textContent = moduleTitles[moduleType] || moduleType.charAt(0).toUpperCase() + moduleType.slice(1);
+
         const prompt = getPrompt(currentProfile.age, moduleType);
         const result = await generateContent(prompt);
         
