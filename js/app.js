@@ -8,7 +8,7 @@ import {
     generateMathProblem,
     generateLogicPuzzle
 } from './gemini.js';
-import { getPrompt } from './prompts.js';
+import { getPrompt, getAvailableModules } from './prompts.js';
 import {
     renderProfilesForSettings,
     renderProfilesForKids,
@@ -317,9 +317,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateModuleVisibility() {
         const age = currentProfile ? parseInt(currentProfile.age, 10) : 0;
-        document.querySelector('[data-module="rhyming"]').style.display = age >= 4 && age <= 7 ? 'block' : 'none';
-        document.querySelector('[data-module="spelling"]').style.display = age >= 5 && age <= 10 ? 'block' : 'none';
-        document.querySelector('[data-module="emoji-riddles"]').style.display = age >= 5 ? 'block' : 'none';
+        const availableModules = getAvailableModules(age);
+        
+        moduleBtns.forEach(btn => {
+            const moduleType = btn.dataset.module;
+            btn.style.display = availableModules[moduleType] ? 'block' : 'none';
+        });
     }
 
     submitAnswersBtn.addEventListener('click', checkAnswers);

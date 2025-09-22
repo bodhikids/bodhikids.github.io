@@ -1,22 +1,51 @@
+// Age range constants
+const AGE_RANGES = {
+    TODDLER: '1-3',
+    PRESCHOOL: '4-6',
+    SCHOOL: '7-9',
+    PRETEEN: '10-12'
+};
+
+// Module visibility rules
+const MODULE_RULES = {
+    reading: { minAge: 1, maxAge: 12 },
+    math: { minAge: 1, maxAge: 12 },
+    logic: { minAge: 1, maxAge: 12 },
+    rhyming: { minAge: 4, maxAge: 7 },
+    spelling: { minAge: 5, maxAge: 10 },
+    'emoji-riddles': { minAge: 5, maxAge: 12 }
+};
+
 export function getAgeRange(age) {
-    let ageRange = '';
+    if (age >= 1 && age <= 3) return AGE_RANGES.TODDLER;
+    if (age >= 4 && age <= 6) return AGE_RANGES.PRESCHOOL;
+    if (age >= 7 && age <= 9) return AGE_RANGES.SCHOOL;
+    if (age >= 10 && age <= 12) return AGE_RANGES.PRETEEN;
+    return '';
+}
 
-    if (age >= 1 && age <= 3) {
-        ageRange = '1-3';
-    } else if (age >= 4 && age <= 6) {
-        ageRange = '4-6';
-    } else if (age >= 7 && age <= 9) {
-        ageRange = '7-9';
-    } else if (age >= 10 && age <= 12) {
-        ageRange = '10-12';
+export function isModuleAvailable(moduleType, age) {
+    const rules = MODULE_RULES[moduleType];
+    if (!rules) return true; // If no rules defined, module is always available
+    return age >= rules.minAge && age <= rules.maxAge;
+}
+
+export function getAvailableModules(age) {
+    const modules = {};
+    for (const [moduleType, rules] of Object.entries(MODULE_RULES)) {
+        modules[moduleType] = isModuleAvailable(moduleType, age);
     }
-
-    return ageRange;
+    return modules;
 }
 
 export function getPrompt(age, moduleType) {
     const ageRange = getAgeRange(age);
     let prompt = '';
+
+    // If module is not available for this age, return empty prompt
+    if (!isModuleAvailable(moduleType, age)) {
+        return '';
+    }
 
     const baseJsonStructure = `Please provide the output in a single, valid JSON object with two keys: "story" and "questions".
 - The "story" should be in Markdown format.
@@ -24,25 +53,25 @@ export function getPrompt(age, moduleType) {
 
     if (moduleType === 'math') {
         switch (ageRange) {
-            case '1-3':
+            case AGE_RANGES.TODDLER:
                 prompt = `Create a simple counting module for a toddler (age ${age}).
                 ${baseJsonStructure}
                 - The "story" should be a very short title or a single sentence, like "## Let's Count! 🔢".
                 - The "questions" should be 3-4 simple questions about counting 1-5 objects, using emojis. Example: "How many apples do you see? 🍎🍎"`;
                 break;
-            case '4-6':
+            case AGE_RANGES.PRESCHOOL:
                 prompt = `Create a basic addition and subtraction module for a young child (age ${age}).
                 ${baseJsonStructure}
                 - The "story" should be a short title or a single sentence, like "## Math Adventure! ➕".
                 - The "questions" should be 5-7 simple problems involving addition and subtraction up to 10. Example: "3 + 4 = ?"`;
                 break;
-            case '7-9':
+            case AGE_RANGES.SCHOOL:
                 prompt = `Create a math module with multiplication and division for a child (age ${age}).
                 ${baseJsonStructure}
                 - The "story" should be a short title or a single sentence, like "## Brainy Math! 🧠".
                 - The "questions" should be 5-7 problems including addition, subtraction, and simple multiplication/division. Example: "4 x 5 = ?"`;
                 break;
-            case '10-12':
+            case AGE_RANGES.PRETEEN:
                 prompt = `Create a math module with word problems for a pre-teen (age ${age}).
                 ${baseJsonStructure}
                 - The "story" should be a short title or a single sentence, like "## Math Puzzles! 🧩".
@@ -51,25 +80,25 @@ export function getPrompt(age, moduleType) {
         }
     } else if (moduleType === 'logic') {
         switch (ageRange) {
-            case '1-3':
+            case AGE_RANGES.TODDLER:
                 prompt = `Create a simple "what comes next?" sequencing module for a toddler (age ${age}).
                 ${baseJsonStructure}
                 - The "story" should be a very short title or a single sentence, like "## What's Next? 🤔".
                 - The "questions" should be 3-4 simple questions about daily routines or simple patterns using emojis. Example: "First you wake up 🛌, then you eat breakfast 🥞. What's next?", with options like "Go to sleep 😴", "Brush your teeth 😁", "Play with toys 🧸".`;
                 break;
-            case '4-6':
+            case AGE_RANGES.PRESCHOOL:
                 prompt = `Create a "sequence of events" logic module for a young child (age ${age}).
                 ${baseJsonStructure}
                 - The "story" should be a short title or a single sentence, like "## Order the Story! 📜".
                 - The "questions" should present a simple 3-step story (e.g., planting a seed) and ask the child to identify the first, middle, or last step. Example: "To make a sandwich, what is the FIRST step?", with options like "Eat the sandwich", "Put jelly on bread", "Get two slices of bread".`;
                 break;
-            case '7-9':
+            case AGE_RANGES.SCHOOL:
                 prompt = `Create a basic "if-then" conditional logic module for a child (age ${age}).
                 ${baseJsonStructure}
                 - The "story" should be a short title or a single sentence, like "## If This, Then That! 🤖".
                 - The "questions" should be 4-6 more complex conditional scenarios. Example: "IF it is raining outside, THEN you should bring...", with options like "A kite", "Sunglasses", "An umbrella", "A bucket".`;
                 break;
-            case '10-12':
+            case AGE_RANGES.PRETEEN:
                 prompt = `Create a simple "algorithmic thinking" module for a pre-teen (age ${age}).
                 ${baseJsonStructure}
                 - The "story" should be a short title or a single sentence, like "## Plan the Steps! 🗺️".
@@ -78,26 +107,25 @@ export function getPrompt(age, moduleType) {
         }
     } else if (moduleType === 'reading') {
         switch (ageRange) {
-            case '1-3':
+            case AGE_RANGES.TODDLER:
                 prompt = `Create a simple object/animal recognition module for a toddler (age ${age}).
                 ${baseJsonStructure}
                 - The "story" should be a very short, one or two-sentence story using simple words and emojis. Example: "The little duck 🦆 says quack!"
                 - The "questions" should be 3-4 simple questions about the story, focusing on recognition. Example: "What animal did you read about?"`;
                 break;
-            case '4-6':
+            case AGE_RANGES.PRESCHOOL:
                 prompt = `Create a short story comprehension module for a young child (age ${age}).
                 ${baseJsonStructure}
                 - The "story" should be a very short, simple paragraph with a clear narrative.
                 - The "questions" should be 3-5 questions about the main characters and events in the story.`;
                 break;
-            case '7-9':
+            case AGE_RANGES.SCHOOL:
                 prompt = `Create a reading comprehension module with a focus on vocabulary for a child (age ${age}).
                 ${baseJsonStructure}
                 - The "story" should be a short paragraph with some more complex words.
                 - The "questions" should be 4-6 questions. They should test comprehension and ask about the meaning of one or two words from the story.`;
                 break;
-
-            case '10-12':
+            case AGE_RANGES.PRETEEN:
                 prompt = `Create a reading module with a focus on inference for a pre-teen (age ${age}).
                 ${baseJsonStructure}
                 - The "story" should be a short, complex narrative that requires the reader to infer character feelings or motivations.
