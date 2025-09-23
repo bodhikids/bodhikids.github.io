@@ -122,6 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
         moduleSelection.classList.add('hidden');
         moduleContainer.classList.remove('hidden');
         backBtn.classList.remove('hidden');
+        settingsFab.classList.add('hidden'); // Hide settings button
+        exitToProfileBtn.classList.add('hidden'); // Hide home button
         
         resetModuleView();
         showLoader();
@@ -317,8 +319,10 @@ document.addEventListener('DOMContentLoaded', () => {
         openParentalGate(() => {
             apiKeyInput.value = getApiKey() || '';
             renderProfilesForSettings(profiles, editProfile, deleteProfile);
-            updateProgressProfileSelect(); // Add this line
+            updateProgressProfileSelect();
             settingsModal.classList.remove('hidden');
+            settingsFab.classList.add('hidden'); // Hide the FAB
+            exitToProfileBtn.classList.add('hidden'); // Hide the Home button
             checkSafari();
         });
     });
@@ -341,6 +345,8 @@ document.addEventListener('DOMContentLoaded', () => {
         moduleContainer.classList.add('hidden');
         moduleSelection.classList.remove('hidden');
         backBtn.classList.add('hidden');
+        settingsFab.classList.remove('hidden'); // Show settings button
+        exitToProfileBtn.classList.remove('hidden'); // Show home button
     });
 
     function updateModuleVisibility() {
@@ -360,6 +366,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (apiKey) {
             setApiKey(apiKey);
             settingsModal.classList.add('hidden');
+            settingsFab.classList.remove('hidden'); // Show the FAB
+            if (currentProfile) {
+                exitToProfileBtn.classList.remove('hidden'); // Show the Home button if a profile is active
+            }
             apiKeyInput.classList.remove('input-error');
         } else {
             apiKeyInput.classList.add('input-error');
