@@ -37,12 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const saveSettingsBtn = document.getElementById('save-settings-btn');
     const profileCreation = document.getElementById('profile-creation');
     const addProfileBtn = document.getElementById('add-profile-btn');
-    const saveProfileBtn = document.getElementById('save-profile-btn');
     const nameInput = document.getElementById('name');
     const ageInput = document.getElementById('age');
     const profileSelectionModal = document.getElementById('profile-selection-modal');
     const closeProfileSelectionBtn = document.getElementById('close-profile-selection-btn');
     const moduleSelection = document.getElementById('module-selection');
+    const themeSelection = document.getElementById('theme-selection');
+    const themeSelectionTitle = document.getElementById('theme-selection-title');
+    const themeButtonsContainer = document.getElementById('theme-buttons');
     const moduleContainer = document.getElementById('module-container');
     const moduleView = document.getElementById('module-view');
     const moduleTitle = document.getElementById('module-title');
@@ -97,10 +99,84 @@ document.addEventListener('DOMContentLoaded', () => {
     let profiles = JSON.parse(safeLocalStorageGet('profiles')) || [];
     let currentProfile = null;
     let currentModule = null;
+    let currentTheme = null;
     let questionsData = [];
     let parentalCheckAnswer = 0;
     let onParentalCheckSuccess = null;
     let profileToEditIndex = -1;
+
+    const THEMES = {
+        'reading': [
+            { id: 'fairy-tale', name: '🏰 Fairy Tale' },
+            { id: 'jungle-adventure', name: '🌴 Jungle Adventure' },
+            { id: 'underwater-world', name: '🐠 Underwater World' },
+            { id: 'superhero-stories', name: '🦸 Superhero Stories' },
+            { id: 'mystery-club', name: '🔍 Mystery Club' }
+        ],
+        'math': [
+            { id: 'bakery-math', name: '🧁 Bakery Math' },
+            { id: 'space-mission', name: '🚀 Space Mission' },
+            { id: 'toy-store', name: '🧸 Toy Store' },
+            { id: 'construction-zone', name: '🏗️ Construction Zone' },
+            { id: 'grocery-shopping', name: '🛒 Grocery Shopping' }
+        ],
+        'logic': [
+            { id: 'detective-case', name: '🕵️ Detective Case' },
+            { id: 'treasure-hunt', name: '🗺️ Treasure Hunt' },
+            { id: 'animal-kingdom', name: '🦁 Animal Kingdom' },
+            { id: 'escape-room', name: '🚪 Escape Room' },
+            { id: 'build-a-city', name: '🏙️ Build a City' }
+        ],
+        'rhyming': [
+            { id: 'silly-songs', name: '🎶 Silly Songs' },
+            { id: 'poetry-corner', name: '✍️ Poetry Corner' },
+            { id: 'rap-battle', name: '🎤 Rap Battle' },
+            { id: 'animal-parade', name: '🐘 Animal Parade' },
+            { id: 'funny-poems', name: '🤪 Funny Poems' }
+        ],
+        'spelling': [
+            { id: 'ancient-egypt', name: '📜 Ancient Egypt' },
+            { id: 'dinosaur-dig', name: '🦴 Dinosaur Dig' },
+            { id: 'magic-spells', name: '🪄 Magic Spells' },
+            { id: 'pirate-treasure', name: '🏴‍☠️ Pirate Treasure' },
+            { id: 'outer-space', name: '🪐 Outer Space' }
+        ],
+        'emoji-riddles': [
+            { id: 'movie-titles', name: '🎬 Movie Titles' },
+            { id: 'food-puzzles', name: '🍔 Food Puzzles' },
+            { id: 'animal-fun', name: '🐘 Animal Fun' },
+            { id: 'famous-places', name: '🏛️ Famous Places' },
+            { id: 'common-phrases', name: '🗣️ Common Phrases' }
+        ],
+        'coding': [
+            { id: 'build-a-robot', name: '🤖 Build a Robot' },
+            { id: 'video-game-design', name: '🎮 Video Game Design' },
+            { id: 'website-creator', name: '🌐 Website Creator' },
+            { id: 'animation-studio', name: '🎬 Animation Studio' },
+            { id: 'create-an-app', name: '📱 Create an App' }
+        ],
+        'ai': [
+            { id: 'friendly-robots', name: '🤖 Friendly Robots' },
+            { id: 'smart-city', name: '🏙️ Smart City' },
+            { id: 'ai-artist', name: '🎨 AI Artist' },
+            { id: 'self-driving-cars', name: '🚗 Self-Driving Cars' },
+            { id: 'virtual-assistant', name: '🗣️ Virtual Assistant' }
+        ],
+        'science': [
+            { id: 'volcano-expedition', name: '🌋 Volcano Expedition' },
+            { id: 'space-exploration', name: '🌌 Space Exploration' },
+            { id: 'deep-sea-discovery', name: '🌊 Deep Sea Discovery' },
+            { id: 'weather-station', name: '🌦️ Weather Station' },
+            { id: 'human-body', name: '🧠 Human Body' }
+        ],
+        'phonics': [
+            { id: 'abc', name: '🔤 ABC Sounds' },
+            { id: 'words', name: '🧩 Make Words' },
+            { id: 'digraphs', name: '🦸 Super Sounds' },
+            { id: 'vowel-teams', name: 'ae Vowel Teams' },
+            { id: 'blends', name: 'sl Blends' }
+        ]
+    };
 
     // --- Core Logic ---
 
@@ -117,8 +193,36 @@ document.addEventListener('DOMContentLoaded', () => {
         updateModuleVisibility();
     }
 
-    async function selectModule(moduleType) {
+    function showThemeSelection(moduleType) {
+        const themes = THEMES[moduleType] || THEMES['default'];
+        themeSelectionTitle.textContent = `Choose a ${moduleType.charAt(0).toUpperCase() + moduleType.slice(1)} Theme!`;
+        themeButtonsContainer.innerHTML = '';
+
+        themes.forEach(theme => {
+            const button = document.createElement('button');
+            button.className = 'module-btn theme-btn';
+            button.dataset.module = moduleType;
+            button.dataset.theme = theme.id;
+            button.innerHTML = theme.name;
+            button.addEventListener('click', () => selectModule(moduleType, theme.id));
+            themeButtonsContainer.appendChild(button);
+        });
+
+        moduleSelection.classList.add('hidden');
+        themeSelection.classList.remove('hidden');
+        backBtn.classList.remove('hidden');
+    }
+
+    async function selectModule(moduleType, theme = null) {
         currentModule = moduleType;
+        currentTheme = theme;
+
+        if (!theme) {
+            showThemeSelection(moduleType);
+            return;
+        }
+
+        themeSelection.classList.add('hidden');
         moduleSelection.classList.add('hidden');
         moduleContainer.classList.remove('hidden');
         backBtn.classList.remove('hidden');
@@ -143,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         moduleTitle.textContent = moduleTitles[moduleType] || moduleType.charAt(0).toUpperCase() + moduleType.slice(1);
 
-        const prompt = getPrompt(currentProfile.age, moduleType);
+        const prompt = getPrompt(currentProfile.age, moduleType, currentTheme);
         const result = await generateContent(prompt);
         
         hideLoader();
@@ -285,19 +389,6 @@ document.addEventListener('DOMContentLoaded', () => {
         profileCreation.classList.toggle('hidden');
     });
 
-    saveProfileBtn.addEventListener('click', () => {
-        const name = nameInput.value;
-        const age = ageInput.value;
-        if (name && age) {
-            profiles.push({ name, age });
-            safeLocalStorageSet('profiles', JSON.stringify(profiles));
-            renderProfilesForSettings(profiles, editProfile, deleteProfile);
-            nameInput.value = '';
-            ageInput.value = '';
-            profileCreation.classList.add('hidden');
-        }
-    });
-
     saveEditProfileBtn.addEventListener('click', () => {
         if (profileToEditIndex > -1) {
             profiles[profileToEditIndex].name = editNameInput.value;
@@ -337,16 +428,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.addEventListener('click', () => selectModule(btn.dataset.module, btn.dataset.theme));
+    });
+
     moduleBtns.forEach(btn => {
         btn.addEventListener('click', () => selectModule(btn.dataset.module));
     });
 
     backBtn.addEventListener('click', () => {
-        moduleContainer.classList.add('hidden');
-        moduleSelection.classList.remove('hidden');
-        backBtn.classList.add('hidden');
-        settingsFab.classList.remove('hidden'); // Show settings button
-        exitToProfileBtn.classList.remove('hidden'); // Show home button
+        if (themeSelection.classList.contains('hidden')) {
+            moduleContainer.classList.add('hidden');
+            moduleSelection.classList.remove('hidden');
+            backBtn.classList.add('hidden');
+            settingsFab.classList.remove('hidden'); // Show settings button
+            exitToProfileBtn.classList.remove('hidden'); // Show home button
+        } else {
+            themeSelection.classList.add('hidden');
+            moduleSelection.classList.remove('hidden');
+            backBtn.classList.add('hidden');
+        }
     });
 
     function updateModuleVisibility() {
@@ -363,6 +464,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     saveSettingsBtn.addEventListener('click', () => {
         const apiKey = apiKeyInput.value.trim();
+        const newName = nameInput.value.trim();
+        const newAge = ageInput.value.trim();
+
+        // Save new profile if fields are filled
+        if (newName && newAge) {
+            profiles.push({ name: newName, age: newAge });
+            safeLocalStorageSet('profiles', JSON.stringify(profiles));
+            renderProfilesForSettings(profiles, editProfile, deleteProfile);
+            updateProgressProfileSelect();
+            nameInput.value = '';
+            ageInput.value = '';
+            profileCreation.classList.add('hidden');
+        }
+
         if (apiKey) {
             setApiKey(apiKey);
             settingsModal.classList.add('hidden');
