@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bodhi-cache-v4'; // Bumped version
+const CACHE_NAME = 'bodhi-cache-v4.1'; // Bumped version
 const urlsToCache = [
     '/',
     '/index.html',
