@@ -60,6 +60,14 @@ function createSpeakerButton(textToSpeak) {
 
 function renderQuestions(questions) {
     questionsContainer.innerHTML = '';
+    
+    // Add defensive check for questions
+    if (!questions || !Array.isArray(questions)) {
+        console.error('renderQuestions called with invalid questions:', questions);
+        questionsContainer.innerHTML = '<p>Error: No questions available to display.</p>';
+        return;
+    }
+    
     questions.forEach((q, index) => {
         const questionCard = document.createElement('div');
         questionCard.className = 'question-card';
@@ -106,6 +114,12 @@ function speak(text) {
 }
 
 export function displayPhonicsModule(questions) {
+    if (!questions || !Array.isArray(questions)) {
+        console.error('displayPhonicsModule called with invalid questions:', questions);
+        displayError('Unable to load phonics questions. Please try again.');
+        return;
+    }
+    
     questionsContainer.innerHTML = '';
     questions.forEach((q, index) => {
         const questionCard = document.createElement('div');
@@ -153,6 +167,12 @@ export function displayPhonicsModule(questions) {
 }
 
 export function displaySpellingModule(words) {
+  if (!words || !Array.isArray(words)) {
+    console.error('displaySpellingModule called with invalid words:', words);
+    displayError('Unable to load spelling words. Please try again.');
+    return;
+  }
+  
   questionsContainer.innerHTML = '';
   words.forEach((wordData, index) => {
     const questionCard = document.createElement('div');
@@ -198,6 +218,12 @@ export function displayModuleContent(title, content, markdownConverter) {
 }
 
 export function displayQuestions(questions) {
+    if (!questions || !Array.isArray(questions)) {
+        console.error('displayQuestions called with invalid questions:', questions);
+        displayError('Unable to load questions. Please try again.');
+        return;
+    }
+    
     questionsContainer.classList.remove('hidden');
     renderQuestions(questions);
     submitAnswersBtn.classList.remove('hidden');

@@ -1,0 +1,901 @@
+/* Welcome Page Styles */
+body {
+    font-family: 'Nunito', sans-serif !important;
+    background: linear-gradient(135deg, #3a506b 0%, #1c2541 100%) !important;
+    color: white !important;
+    margin: 0 !important;
+    padding: max(50px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left)) !important;
+    min-height: 100vh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    display: block !important;
+    justify-content: initial !important;
+    align-items: initial !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* API Setup Card - Complete Redesign */
+.api-setup-card {
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    padding: 32px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
+    max-width: 600px !important;
+    margin: 0 auto 20px auto !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+}
+
+.api-setup-card h2 {
+    color: #2c3e50 !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 12px !important;
+    text-align: left !important;
+}
+
+.api-setup-card > p {
+    color: #6c757d !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 32px !important;
+    text-align: left !important;
+    line-height: 1.5 !important;
+}
+
+/* API Key Input Section */
+.api-input-container {
+    margin-bottom: 32px !important;
+    display: block !important;
+    visibility: visible !important;
+}
+
+.api-input-container label {
+    display: block !important;
+    color: #2c3e50 !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    margin-bottom: 8px !important;
+    text-align: left !important;
+    visibility: visible !important;
+}
+
+.api-key-input-wrapper {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    background: #f8f9fa !important;
+    border: 2px solid #e9ecef !important;
+    border-radius: 12px !important;
+    padding: 4px !important;
+    transition: border-color 0.3s ease !important;
+    visibility: visible !important;
+}
+
+.api-key-input-wrapper:focus-within {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 3px rgba(58, 80, 107, 0.1) !important;
+}
+
+#api-key-setup {
+    flex: 1 !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 16px 20px !important;
+    font-size: 1rem !important;
+    font-family: 'Courier New', monospace !important;
+    color: #2c3e50 !important;
+    outline: none !important;
+    border-radius: 8px !important;
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+#api-key-setup::placeholder {
+    color: #6c757d !important;
+    font-family: 'Nunito', sans-serif !important;
+}
+
+.toggle-visibility-btn {
+    background: none !important;
+    border: none !important;
+    padding: 12px !important;
+    cursor: pointer !important;
+    font-size: 1.2rem !important;
+    border-radius: 8px !important;
+    transition: background-color 0.2s ease !important;
+    margin-right: 8px !important;
+    display: block !important;
+    visibility: visible !important;
+}
+
+.toggle-visibility-btn:hover {
+    background: rgba(108, 117, 125, 0.1) !important;
+}
+
+/* Benefits Section */
+.api-benefits {
+    margin-bottom: 32px !important;
+}
+
+.api-benefits h3 {
+    color: #2c3e50 !important;
+    font-size: 1.3rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 16px !important;
+    text-align: left !important;
+}
+
+.benefits-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.benefits-list li {
+    color: #495057 !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    padding: 8px 0 !important;
+    text-align: left !important;
+    border-bottom: 1px solid #f1f3f4 !important;
+}
+
+.benefits-list li:last-child {
+    border-bottom: none !important;
+}
+
+/* Instructions Section */
+.api-instructions {
+    margin-bottom: 32px !important;
+}
+
+.api-instructions h3 {
+    color: #2c3e50 !important;
+    font-size: 1.3rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 16px !important;
+    text-align: left !important;
+}
+
+.instruction-text {
+    background: #f8f9fa !important;
+    padding: 24px !important;
+    border-radius: 12px !important;
+    border-left: 4px solid var(--primary-color) !important;
+}
+
+.instruction-text p {
+    color: #495057 !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    margin: 0 0 12px 0 !important;
+    text-align: left !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    hyphens: auto !important;
+    max-width: 100% !important;
+}
+
+.instruction-text p:last-child {
+    margin-bottom: 0 !important;
+}
+
+.instruction-text a {
+    color: var(--primary-color) !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+}
+
+.instruction-text a:hover {
+    text-decoration: underline !important;
+}
+
+.api-note {
+    margin-top: 16px !important;
+    padding: 16px !important;
+    background: #e7f3ff !important;
+    border: 1px solid #b3d9ff !important;
+    border-radius: 8px !important;
+}
+
+.api-note p {
+    color: #1a5490 !important;
+    font-size: 0.9rem !important;
+    margin: 0 !important;
+    text-align: left !important;
+}
+
+/* Remove/Override Previous Conflicting Styles */
+.benefits-section,
+.benefits-grid,
+.benefit-item,
+.instructions-section,
+.instruction-steps,
+.step-item,
+.step-number {
+    display: none !important;
+}
+
+.api-key-section,
+.input-with-button,
+.btn-toggle {
+    display: none !important;
+}
+
+/* Mobile Responsive Styles for API Setup */
+@media (max-width: 768px) {
+    html {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    body {
+        padding: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left)) !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+    }
+    
+    header {
+        margin-top: max(10px, env(safe-area-inset-top)) !important;
+        padding-top: 20px !important;
+    }
+    
+    header h1 {
+        font-size: 2.5rem !important;
+    }
+    
+    .app-container {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+    
+    #first-time-setup {
+        padding: 5px !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+    
+    .api-setup-card {
+        padding: 20px !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        border-radius: 12px !important;
+        overflow-x: hidden !important;
+    }
+    
+    .setup-step .card {
+        padding: 20px !important;
+        margin: 0 0 20px 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        border-radius: 12px !important;
+        overflow-x: hidden !important;
+    }
+    
+    .api-setup-card h2, .setup-step h2 {
+        font-size: 1.6rem !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+    }
+    
+    .instruction-text {
+        padding: 16px !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+        overflow-x: hidden !important;
+    }
+    
+    #api-key-setup {
+        padding: 14px 16px !important;
+        font-size: 0.9rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+    
+    .benefits-list li {
+        font-size: 0.95rem !important;
+        padding: 10px 0 !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+    }
+    
+    /* Ensure all text elements wrap properly */
+    * {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+    }
+}
+
+.background-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.app-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: max(0px, env(safe-area-inset-top));
+    margin-top: 20px;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+#first-time-setup {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.setup-step {
+    display: none;
+}
+
+.setup-step.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.setup-step .card {
+    margin-bottom: 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.setup-step h2 {
+    color: #2c3e50 !important;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+    text-align: left;
+}
+
+.setup-step p {
+    color: #6c757d !important;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.setup-features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    background: var(--card-background);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    min-width: 120px;
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 2rem;
+}
+
+.feature span:last-child {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* PIN Setup Styles */
+.pin-setup-section {
+    margin: 30px 0;
+}
+
+.pin-input-section,
+.recovery-section {
+    margin-bottom: 30px;
+}
+
+.pin-input-section h3,
+.recovery-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.pin-digits {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pin-digit {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: border-color 0.3s;
+}
+
+.pin-digit:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(58, 80, 107, 0.1);
+}
+
+.recovery-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.question-card {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.question {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 8px;
+}
+
+.answer-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.answer-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* API Key Setup Styles */
+.api-key-section {
+    margin: 30px 0;
+}
+
+.api-key-section .input-with-button {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+#api-key-setup {
+    flex: 1;
+    padding: 16px 20px;
+    border: 2px solid #e1e5e9;
+    border-radius: 12px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background: white;
+    color: #333;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+}
+
+#api-key-setup:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+#api-key-setup::placeholder {
+    color: #999;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+}
+
+.btn-toggle {
+    padding: 16px 20px;
+    border: none;
+    background: #6c757d;
+    color: white;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.btn-toggle:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+}
+
+/* Profile Setup Styles */
+.profile-form {
+    max-width: 300px;
+    margin: 30px auto 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #2c3e50 !important;
+}
+
+#setup-name,
+#setup-age {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+#setup-name:focus,
+#setup-age:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Completion Styles */
+.completion-summary {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 20px;
+    background: #d4edda;
+    border: 2px solid #c3e6cb;
+    border-radius: 10px;
+    color: #155724;
+    font-weight: 500;
+}
+
+.summary-icon {
+    font-size: 1.5rem;
+}
+
+/* Step Actions */
+.step-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+.step-actions .btn-secondary {
+    min-width: 120px;
+    padding: 14px 24px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.step-actions .btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+}
+
+.step-actions .btn-primary {
+    min-width: 120px;
+    padding: 14px 24px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.step-actions .btn-primary:hover {
+    background: #2980b9;
+    transform: translateY(-1px);
+}
+
+/* Progress Indicator */
+.setup-progress {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    opacity: 0.4;
+    transition: opacity 0.3s;
+}
+
+.progress-step.active {
+    opacity: 1;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--text-color);
+    transition: all 0.3s;
+}
+
+.progress-step.active .step-number {
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.step-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+/* Error Message */
+.error-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #dc3545;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 90%;
+    text-align: center;
+}
+
+.error-message.hidden {
+    display: none;
+}
+
+/* Helper Text */
+.helper-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    html {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    body {
+        padding: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left)) !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+    }
+    
+    header {
+        margin-top: max(10px, env(safe-area-inset-top)) !important;
+        padding-top: 20px !important;
+    }
+    
+    header h1 {
+        font-size: 2.5rem !important;
+    }
+    
+    #first-time-setup {
+        padding: 5px !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+    
+    .setup-step .card {
+        padding: 20px !important;
+        margin: 0 0 20px 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        border-radius: 12px !important;
+        overflow-x: hidden !important;
+    }
+    
+    .setup-step h2 {
+        font-size: 1.6rem !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+    }
+
+    .step-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step-actions .btn-secondary,
+    .step-actions .btn-primary {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .api-key-section .input-with-button {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn-toggle {
+        align-self: flex-start;
+        min-width: 120px;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .instruction-steps {
+        gap: 20px;
+    }
+}
+
+    .setup-features {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .completion-summary {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .step-actions {
+        flex-direction: column;
+    }
+
+    .setup-progress {
+        gap: 10px;
+    }
+
+    .step-number {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+
+    .step-label {
+        font-size: 0.8rem;
+    }
+
+    .pin-digits {
+        gap: 10px;
+    }
+
+    .pin-digit {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+}
+
+/* Button Styles */
+.btn-primary, .btn-secondary {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-family);
+    font-weight: 700;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.btn-secondary {
+    background-color: #ccc;
+    color: var(--text-color);
+}
+
+.btn-secondary:hover {
+    background-color: #bbb;
+}

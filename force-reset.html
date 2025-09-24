@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Bodhi - Reset Required</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ffc300">
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/images/icon-192x192.png">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #3a506b 0%, #1c2541 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .reset-modal {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .reset-modal h1 {
+            color: #3a506b;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+
+        .reset-modal p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc300;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .warning-box h3 {
+            color: #856404;
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        .warning-box ul {
+            color: #856404;
+            margin: 10px 0 0 20px;
+            padding: 0;
+        }
+
+        .warning-box li {
+            margin-bottom: 5px;
+        }
+
+        .reset-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .reset-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            min-width: 120px;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+        }
+
+        .feature span {
+            font-weight: 600;
+            color: #3a506b;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="reset-modal">
+        <h1>🔄 Welcome Back to Bodhi!</h1>
+        <p>We've made some exciting improvements to make your learning experience even better. To continue, we need to update your app with the latest features.</p>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🔐</div>
+                <span>Secure PIN Protection</span>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📚</div>
+                <span>Enhanced Learning</span>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <span>Better Performance</span>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            <h3>⚠️ Important Notice</h3>
+            <p>This update requires resetting your current data. Don't worry - you can:</p>
+            <ul>
+                <li>Re-add your API key</li>
+                <li>Create profiles for your children</li>
+                <li>Set up secure parental controls</li>
+            </ul>
+        </div>
+
+        <button class="reset-btn" onclick="proceedWithReset()">Continue to Setup</button>
+    </div>
+
+    <script>
+        function proceedWithReset() {
+            // Clear all existing data
+            localStorage.clear();
+
+            // Redirect to welcome page
+            window.location.href = 'welcome.html';
+        }
+
+        // Prevent going back
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function() {
+            window.history.pushState(null, null, window.location.href);
+        };
+    </script>
+</body>
+</html>

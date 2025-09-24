@@ -13,6 +13,26 @@
     <link rel="apple-touch-icon" href="assets/images/icon-192x192.png">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script>
+        // Check setup status and handle existing users
+        const setupComplete = localStorage.getItem('bodhiSetupComplete');
+        const hasExistingData = localStorage.getItem('profiles') || localStorage.getItem('gemini_api_key');
+        const hasPinSetup = localStorage.getItem('parentalPin');
+
+        if (!setupComplete) {
+            if (hasExistingData) {
+                // Existing user without proper setup - force reset
+                window.location.href = 'force-reset.html';
+            } else {
+                // New user - go to welcome
+                window.location.href = 'welcome.html';
+            }
+        } else if (!hasPinSetup) {
+            // User has setup but no PIN - force PIN setup
+            window.location.href = 'force-reset.html';
+        }
+        // If setup complete and PIN exists, continue to main app
+    </script>
 </head>
 <body>
     <div class="background-shapes">
@@ -131,6 +151,20 @@
                 </select>
                 <div id="progress-stats"></div>
             </div>
+            <hr>
+            <div id="reset-section">
+                <h3>🔄 Reset App</h3>
+                <div class="reset-toggle-container">
+                    <button id="toggle-reset-btn" class="toggle-btn">Show Reset Options</button>
+                </div>
+                <div id="reset-options" class="reset-options hidden">
+                    <p class="warning-text">⚠️ <strong>Danger Zone:</strong> This will permanently delete all profiles, progress data, API keys, and settings. The app will restart with the welcome setup.</p>
+                    <div class="reset-confirmation">
+                        <p class="confirm-text">Are you sure? This action cannot be undone.</p>
+                        <button id="reset-app-btn" class="btn-danger-small">Reset Everything</button>
+                    </div>
+                </div>
+            </div>
             <div class="settings-footer">
                 <p>Made by <a href="https://simkeyur.github.io" target="_blank" rel="noopener noreferrer">Keyur</a>. Suggestions are welcome!</p>
             </div>
@@ -161,12 +195,122 @@
         </div>
     </div>
 
+    <!-- PIN Entry Modal -->
+    <div id="pin-entry-modal" class="modal-container hidden">
+        <div class="modal-content card">
+            <h2>🔐 Enter Parental PIN</h2>
+            <p>Please enter your 4-digit PIN to access parental controls.</p>
+            <div class="pin-input-section">
+                <div class="pin-digits">
+                    <input type="password" class="pin-digit" maxlength="1" data-index="0">
+                    <input type="password" class="pin-digit" maxlength="1" data-index="1">
+                    <input type="password" class="pin-digit" maxlength="1" data-index="2">
+                    <input type="password" class="pin-digit" maxlength="1" data-index="3">
+                </div>
+                <button type="button" id="toggle-pin-entry-visibility" class="btn-secondary">Show PIN</button>
+            </div>
+            <p id="pin-error-message" class="error-message hidden">Incorrect PIN. Please try again.</p>
+            <div class="step-actions">
+                <button id="forgot-pin-btn" class="btn-secondary">Forgot PIN?</button>
+                <button id="submit-pin-btn" class="btn-primary">Confirm</button>
+            </div>
+            <button id="close-pin-entry-btn" class="btn-close">✖</button>
+        </div>
+    </div>
+
+    <!-- PIN Recovery Modal -->
+    <div id="pin-recovery-modal" class="modal-container hidden">
+        <div class="modal-content card">
+            <h2>🔑 Recover Your PIN</h2>
+            <p>Please answer your recovery questions to reset your PIN.</p>
+            <div id="recovery-questions-container"></div>
+            <p id="recovery-error-message" class="error-message hidden">Incorrect answers. Please try again.</p>
+            <div class="helper-info">
+                <p><strong>🔄 Forgot your security questions?</strong></p>
+                <p>You can perform a hard reset by deleting this app from your device and re-installing by visiting <strong>bodhikids.github.io</strong></p>
+            </div>
+            <div class="step-actions">
+                <button id="back-to-pin-btn" class="btn-secondary">Back</button>
+                <button id="submit-recovery-btn" class="btn-primary">Reset PIN</button>
+            </div>
+            <button id="close-pin-recovery-btn" class="btn-close">✖</button>
+        </div>
+    </div>
+
+    <!-- PIN Reset Modal -->
+    <div id="pin-reset-modal" class="modal-container fullscreen-modal hidden">
+        <div class="modal-content card">
+            <div class="settings-page">
+                <h2>🔑 Reset Your PIN</h2>
+                <p>Create a new PIN to protect parental settings.</p>
+
+                <div class="pin-setup-section">
+                    <div class="pin-input-section">
+                        <h3>1. Create Your New PIN</h3>
+                        <div class="pin-digits">
+                            <input type="password" class="pin-digit-reset" maxlength="1" inputmode="numeric" pattern="[0-9]" placeholder="•" />
+                            <input type="password" class="pin-digit-reset" maxlength="1" inputmode="numeric" pattern="[0-9]" placeholder="•" />
+                            <input type="password" class="pin-digit-reset" maxlength="1" inputmode="numeric" pattern="[0-9]" placeholder="•" />
+                            <input type="password" class="pin-digit-reset" maxlength="1" inputmode="numeric" pattern="[0-9]" placeholder="•" />
+                        </div>
+                        <button type="button" id="toggle-reset-pin-visibility" class="btn-secondary">Show PIN</button>
+                        <p class="helper-text">This PIN will be used to access parental settings</p>
+                    </div>
+
+                    <div class="recovery-section">
+                        <h3>2. Update Recovery Questions</h3>
+                        <p class="helper-text">Answer these questions to recover your PIN if forgotten</p>
+
+                        <div class="recovery-questions">
+                            <div class="question-card">
+                                <div class="question">What is your favorite color?</div>
+                                <input type="text" id="reset-recovery-color" class="answer-input" placeholder="Your answer" autocomplete="off" />
+                            </div>
+
+                            <div class="question-card">
+                                <div class="question">What city were you born in?</div>
+                                <input type="text" id="reset-recovery-city" class="answer-input" placeholder="Your answer" autocomplete="off" />
+                            </div>
+
+                            <div class="question-card">
+                                <div class="question">What is your favorite sports team?</div>
+                                <input type="text" id="reset-recovery-team" class="answer-input" placeholder="Your answer" autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p id="reset-pin-error-message" class="error-message hidden">Please fill in all fields</p>
+            </div>
+            
+            <!-- Fixed buttons with proper spacing -->
+            <div class="step-actions">
+                <button id="cancel-pin-reset-btn" class="btn-secondary">Cancel</button>
+                <button id="save-reset-pin-btn" class="btn-primary">Update PIN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Profile Modal -->
+    <div id="add-profile-modal" class="modal-container hidden">
+        <div class="modal-content card">
+            <h2>✨ Add New Profile</h2>
+            <input type="text" id="add-profile-name" placeholder="Enter child's name">
+            <input type="number" id="add-profile-age" placeholder="Enter age (3-15)" min="3" max="15">
+            <div class="button-group">
+                <button id="save-add-profile-btn" class="btn-primary">Add Profile</button>
+                <button id="cancel-add-profile-btn" class="btn-secondary">Cancel</button>
+            </div>
+            <button id="close-add-profile-btn" class="btn-close">✖</button>
+        </div>
+    </div>
+
     <!-- Edit Profile Modal -->
     <div id="edit-profile-modal" class="modal-container hidden">
         <div class="modal-content card">
             <h2>✏️ Edit Profile</h2>
             <input type="text" id="edit-name" placeholder="Enter Name">
-            <input type="number" id="edit-age" placeholder="Enter Age">
+            <input type="number" id="edit-age" placeholder="Enter Age (3-15)" min="3" max="15">
             <button id="save-edit-profile-btn" class="btn-primary">Save Changes</button>
             <button id="close-edit-modal-btn" class="btn-close">✖</button>
         </div>
@@ -174,6 +318,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    
+    <!-- Notyf Toast Library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    
     <script type="module" src="js/app.js"></script>
     <script type="module" src="js/gemini.js"></script>
     <script type="module" src="js/prompts.js"></script>

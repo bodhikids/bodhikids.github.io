@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Welcome to Bodhi 🌱</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ffc300">
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/images/icon-192x192.png">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/welcome.css">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+        <div class="shape shape5"></div>
+        <div class="emoji" style="left: 5%; animation-duration: 22s; font-size: 2.5em;">📚</div>
+        <div class="emoji" style="left: 15%; animation-duration: 18s; font-size: 2em;">🐝</div>
+        <div class="emoji" style="left: 20%; animation-duration: 25s; font-size: 3em;">🌈</div>
+        <div class="emoji" style="left: 35%; animation-duration: 15s; font-size: 2.2em;">🧩</div>
+        <div class="emoji" style="left: 55%; animation-duration: 20s; font-size: 2.8em;">🎨</div>
+        <div class="emoji" style="left: 70%; animation-duration: 16s; font-size: 2.1em;">✨</div>
+        <div class="emoji" style="left: 85%; animation-duration: 24s; font-size: 2.6em;">🍎</div>
+        <div class="emoji" style="left: 95%; animation-duration: 19s; font-size: 2.3em;">🦋</div>
+    </div>
+
+    <div class="app-container">
+        <header>
+            <h1>Bodhi 🌱</h1>
+        </header>
+
+        <!-- First Time Setup -->
+        <div id="first-time-setup">
+            <div class="setup-step active" id="welcome-step">
+                <div class="card">
+                    <h2>Welcome to Bodhi! 🌱</h2>
+                    <p>Let's set up your family's learning environment together.</p>
+                    <div class="setup-features">
+                        <div class="feature">
+                            <span class="feature-icon">🔒</span>
+                            <span>Secure parental controls</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🤖</span>
+                            <span>AI-powered learning</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">👨‍👩‍👧‍👦</span>
+                            <span>Multiple child profiles</span>
+                        </div>
+                    </div>
+                    <button id="start-setup-btn" class="btn-primary">Begin Setup</button>
+                </div>
+            </div>
+
+            <div class="setup-step" id="pin-setup-step">
+                <div class="card">
+                    <h2>Secure Your App 🔒</h2>
+                    <p>Create a PIN to protect parental settings and recovery questions in case you forget it.</p>
+
+                    <div class="pin-setup-section">
+                        <div class="pin-input-section">
+                            <h3>1. Create Your PIN</h3>
+                            <div class="pin-digits">
+                                <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" placeholder="•" />
+                                <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" placeholder="•" />
+                                <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" placeholder="•" />
+                                <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" placeholder="•" />
+                            </div>
+                            <button type="button" id="toggle-pin-visibility" class="btn-secondary">Show PIN</button>
+                            <p class="helper-text">This PIN will be used to access parental settings</p>
+                        </div>
+
+                        <div class="recovery-section">
+                            <h3>2. Recovery Questions</h3>
+                            <p class="helper-text">Answer these questions to recover your PIN if forgotten</p>
+
+                            <div class="recovery-questions">
+                                <div class="question-card">
+                                    <div class="question">What is your favorite color?</div>
+                                    <input type="text" id="recovery-color" class="answer-input" placeholder="Your answer" autocomplete="off" />
+                                </div>
+
+                                <div class="question-card">
+                                    <div class="question">What city were you born in?</div>
+                                    <input type="text" id="recovery-city" class="answer-input" placeholder="Your answer" autocomplete="off" />
+                                </div>
+
+                                <div class="question-card">
+                                    <div class="question">What is your favorite sports team?</div>
+                                    <input type="text" id="recovery-team" class="answer-input" placeholder="Your answer" autocomplete="off" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button id="back-to-welcome-btn" class="btn-secondary">Back</button>
+                        <button id="save-pin-btn" class="btn-primary">Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setup-step" id="api-setup-step">
+                <div class="card api-setup-card">
+                    <h2>Connect to Google AI 🤖</h2>
+                    <p>Enter your Gemini API key to unlock AI-powered learning features.</p>
+
+                    <!-- API Key Input Section -->
+                    <div class="api-input-container">
+                        <label for="api-key-setup">API Key</label>
+                        <div class="api-key-input-wrapper">
+                            <input type="password" id="api-key-setup" placeholder="Enter your Google AI API key" />
+                            <button type="button" id="toggle-api-visibility" class="toggle-visibility-btn" title="Toggle visibility">👁️</button>
+                        </div>
+                    </div>
+
+                    <!-- Benefits Section -->
+                    <div class="api-benefits">
+                        <h3>What you get with Google AI:</h3>
+                        <ul class="benefits-list">
+                            <li>📚 100+ learning modules daily (free tier)</li>
+                            <li>🧠 Theme based AI tutoring</li>
+                            <li>🎯 Adaptive learning paths</li>
+                        </ul>
+                    </div>
+
+                    <!-- Instructions Section -->
+                    <div class="api-instructions">
+                        <h3>How to get your API key:</h3>
+                        <div class="instruction-text">
+                            <p><strong>1.</strong> Go to <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio</a></p>
+                            <p><strong>2.</strong> Sign in with your Google account</p>
+                            <p><strong>3.</strong> Click "Create API Key" button</p>
+                            <p><strong>4.</strong> Copy the generated key and paste it above</p>
+                            <p><strong>5.</strong> The API key is free with generous usage limits</p>
+                        </div>
+                        
+                        <div class="api-note">
+                            <p><strong>Note:</strong> Your API key is stored securely on your device and never shared.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button id="back-to-pin-btn" class="btn-secondary">Back</button>
+                        <button id="save-api-key-btn" class="btn-primary">Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setup-step" id="profile-setup-step">
+                <div class="card">
+                    <h2>Create Your First Profile 👶</h2>
+                    <p>Add your child's information to personalize their learning experience.</p>
+
+                    <div class="profile-form">
+                        <div class="form-group">
+                            <label for="setup-name">Child's Name</label>
+                            <input type="text" id="setup-name" placeholder="Enter name" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="setup-age">Age</label>
+                            <input type="number" id="setup-age" placeholder="Age" min="1" max="15" />
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button id="back-to-api-btn" class="btn-secondary">Back</button>
+                        <button id="save-profile-btn" class="btn-primary">Complete Setup</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Setup Complete -->
+            <div class="setup-step" id="setup-complete-step">
+                <div class="card">
+                    <h2>Setup Complete! 🎉</h2>
+                    <p>Your family's learning environment is ready. Let's start the adventure!</p>
+
+                    <div class="completion-summary">
+                        <div class="summary-item">
+                            <span class="summary-icon">🔒</span>
+                            <span>Parental controls configured</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-icon">🤖</span>
+                            <span>AI learning enabled</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-icon">👶</span>
+                            <span>Child profile created</span>
+                        </div>
+                    </div>
+
+                    <button id="enter-app-btn" class="btn-primary">Enter Bodhi</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="setup-progress">
+            <div class="progress-step active" data-step="1">
+                <span class="step-number">1</span>
+                <span class="step-label">Welcome</span>
+            </div>
+            <div class="progress-step" data-step="2">
+                <span class="step-number">2</span>
+                <span class="step-label">Security</span>
+            </div>
+            <div class="progress-step" data-step="3">
+                <span class="step-number">3</span>
+                <span class="step-label">AI Setup</span>
+            </div>
+            <div class="progress-step" data-step="4">
+                <span class="step-number">4</span>
+                <span class="step-label">Profile</span>
+            </div>
+            <div class="progress-step" data-step="5">
+                <span class="step-number">5</span>
+                <span class="step-label">Complete</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Message -->
+    <div id="setup-error-message" class="error-message hidden"></div>
+
+    <script src="js/welcome-setup.js"></script>
+</body>
+</html>
