@@ -38,7 +38,63 @@
 
         <!-- First Time Setup -->
         <div id="first-time-setup">
-            <div class="setup-step active" id="welcome-step">
+            <!-- PWA Install Step -->
+            <div class="setup-step active" id="pwa-install-step">
+                <div class="card">
+                    <h2>Install Bodhi 📱</h2>
+                    <p>Get the best experience by installing Bodhi as an app on your device.</p>
+                    
+                    <div class="pwa-benefits">
+                        <div class="pwa-benefit">
+                            <span class="benefit-icon">⚡</span>
+                            <div class="benefit-content">
+                                <h4>Faster Access</h4>
+                                <p>Launch directly from your home screen</p>
+                            </div>
+                        </div>
+                        <div class="pwa-benefit">
+                            <span class="benefit-icon">📱</span>
+                            <div class="benefit-content">
+                                <h4>App-like Experience</h4>
+                                <p>Full screen with native app feel</p>
+                            </div>
+                        </div>
+                        <div class="pwa-benefit">
+                            <span class="benefit-icon">🔄</span>
+                            <div class="benefit-content">
+                                <h4>Works Offline</h4>
+                                <p>Access your learning modules anytime</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pwa-install-prompt" class="pwa-install-section" style="display: none;">
+                        <div class="install-instructions">
+                            <h4>Tap the "Install" button when it appears</h4>
+                            <p>Your browser will show an install prompt - tap "Install" or "Add to Home Screen"</p>
+                        </div>
+                        <button id="install-pwa-btn" class="btn-primary">Install Now</button>
+                    </div>
+
+                    <div id="pwa-manual-install" class="pwa-install-section">
+                        <div class="manual-install-info">
+                            <h4>Manual Installation</h4>
+                            <div class="install-steps">
+                                <p><strong>iOS Safari:</strong> Tap Share → Add to Home Screen</p>
+                                <p><strong>Android Chrome:</strong> Menu → Add to Home Screen</p>
+                                <p><strong>Desktop:</strong> Address bar → Install app icon</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button id="skip-install-btn" class="btn-secondary">Skip Installation</button>
+                        <button id="continue-after-install-btn" class="btn-primary">Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setup-step" id="welcome-step">
                 <div class="card">
                     <h2>Welcome to Bodhi! 🌱</h2>
                     <p>Let's set up your family's learning environment together.</p>
@@ -56,7 +112,10 @@
                             <span>Multiple child profiles</span>
                         </div>
                     </div>
-                    <button id="start-setup-btn" class="btn-primary">Begin Setup</button>
+                    <div class="step-actions">
+                        <button id="back-to-install-btn" class="btn-secondary">Back</button>
+                        <button id="start-setup-btn" class="btn-primary">Begin Setup</button>
+                    </div>
                 </div>
             </div>
 
@@ -209,22 +268,26 @@
         <div class="setup-progress">
             <div class="progress-step active" data-step="1">
                 <span class="step-number">1</span>
-                <span class="step-label">Welcome</span>
+                <span class="step-label">Install</span>
             </div>
             <div class="progress-step" data-step="2">
                 <span class="step-number">2</span>
-                <span class="step-label">Security</span>
+                <span class="step-label">Welcome</span>
             </div>
             <div class="progress-step" data-step="3">
                 <span class="step-number">3</span>
-                <span class="step-label">AI Setup</span>
+                <span class="step-label">Security</span>
             </div>
             <div class="progress-step" data-step="4">
                 <span class="step-number">4</span>
-                <span class="step-label">Profile</span>
+                <span class="step-label">AI Setup</span>
             </div>
             <div class="progress-step" data-step="5">
                 <span class="step-number">5</span>
+                <span class="step-label">Profile</span>
+            </div>
+            <div class="progress-step" data-step="6">
+                <span class="step-number">6</span>
                 <span class="step-label">Complete</span>
             </div>
         </div>

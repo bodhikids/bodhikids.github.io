@@ -15,6 +15,135 @@ body {
     box-sizing: border-box !important;
 }
 
+/* PWA Install Step Styles */
+.pwa-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.pwa-benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.pwa-benefit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.pwa-benefit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ffc300, #3498db);
+}
+
+.benefit-icon {
+    font-size: 2.5rem;
+    min-width: 60px;
+    text-align: center;
+    background: rgba(255, 195, 0, 0.1);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Card hover effects and animations */
+.pwa-benefit:nth-child(1) .benefit-icon {
+    background: rgba(255, 195, 0, 0.15);
+}
+
+.pwa-benefit:nth-child(2) .benefit-icon {
+    background: rgba(52, 152, 219, 0.15);
+}
+
+.pwa-benefit:nth-child(3) .benefit-icon {
+    background: rgba(46, 204, 113, 0.15);
+}
+
+.pwa-benefit:hover .benefit-icon {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.benefit-content {
+    flex: 1;
+    padding-top: 4px;
+}
+
+.benefit-content h4 {
+    margin: 0 0 8px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #2c3e50;
+}
+
+.benefit-content p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #5a6c7d;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.pwa-install-section {
+    margin: 25px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.install-instructions h4,
+.manual-install-info h4 {
+    margin: 0 0 15px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffc300;
+}
+
+.install-instructions p {
+    margin: 0;
+    font-size: 0.95rem;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.install-steps p {
+    margin: 8px 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+    padding-left: 10px;
+    border-left: 3px solid #ffc300;
+    padding-left: 15px;
+}
+
+#install-pwa-btn {
+    margin-top: 15px;
+    width: 100%;
+}
+
 /* API Setup Card - Complete Redesign */
 .api-setup-card {
     background: #ffffff !important;
@@ -799,14 +928,17 @@ header h1 {
     }
 
     .step-actions {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
     }
 
     .step-actions .btn-secondary,
     .step-actions .btn-primary {
-        width: 100%;
-        max-width: 300px;
+        flex: 1;
+        min-width: 120px;
+        max-width: 200px;
     }
 
     .api-key-section .input-with-button {
@@ -826,7 +958,6 @@ header h1 {
     .instruction-steps {
         gap: 20px;
     }
-}
 
     .setup-features {
         flex-direction: column;
@@ -836,10 +967,6 @@ header h1 {
     .completion-summary {
         flex-direction: column;
         gap: 15px;
-    }
-
-    .step-actions {
-        flex-direction: column;
     }
 
     .setup-progress {
@@ -867,35 +994,42 @@ header h1 {
     }
 }
 
-/* Button Styles */
-.btn-primary, .btn-secondary {
-    padding: 15px 30px;
-    border: none;
-    border-radius: 15px;
-    font-size: 1.2em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: var(--font-family);
-    font-weight: 700;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-}
-
-.btn-secondary {
-    background-color: #ccc;
-    color: var(--text-color);
-}
-
-.btn-secondary:hover {
-    background-color: #bbb;
+/* Additional Mobile Responsive Styles for Very Small Screens */
+@media (max-width: 480px) {
+    .step-actions {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .step-actions .btn-secondary,
+    .step-actions .btn-primary {
+        width: 100%;
+        max-width: none;
+        flex: none;
+    }
+    
+    .pwa-benefits {
+        gap: 10px;
+        margin: 15px 0;
+    }
+    
+    .pwa-benefit {
+        padding: 16px;
+        gap: 14px;
+    }
+    
+    .benefit-icon {
+        font-size: 2rem;
+        min-width: 50px;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .benefit-content h4 {
+        font-size: 1.1rem;
+    }
+    
+    .benefit-content p {
+        font-size: 0.9rem;
+    }
 }
