@@ -80,6 +80,27 @@ header h1 {
     margin-bottom: 30px;
 }
 
+/* Header Logo Styling */
+.header-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-image {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    padding-bottom: 32px;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
+    transition: transform 0.3s ease;
+}
+
+.logo-image:hover {
+    transform: scale(1.05);
+}
+
 .hidden {
     display: none !important;
 }
@@ -194,13 +215,14 @@ header h1 {
 }
 
 input[type="text"], input[type="number"] {
-    width: 95%;
+    width: 100%;
     padding: 15px;
     margin-bottom: 15px;
     border: 2px solid #ddd;
     border-radius: 10px;
     font-size: 1em;
     font-family: var(--font-family);
+    box-sizing: border-box;
 }
 
 .btn-primary, .btn-secondary, .module-btn {
@@ -590,6 +612,16 @@ input[type="text"], input[type="number"] {
     .module-buttons {
         flex-direction: column;
     }
+    
+    .logo-image {
+        width: 100px !important;
+        height: 100px !important;
+        padding-bottom: 28px !important;
+    }
+    
+    header h1 {
+        font-size: 2.5em !important;
+    }
 }
 
 /* Floating Action Button */
@@ -647,9 +679,19 @@ input[type="text"], input[type="number"] {
 
 .modal-content {
     position: relative;
-    width: 90%;
+    width: 80%;
     max-width: 600px;
     transition: transform 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* Ensure all inputs in modals stay within bounds */
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content input[type="password"] {
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 .fullscreen-modal .modal-content {
@@ -1076,7 +1118,7 @@ hr {
 /* Responsive adjustments for PIN modals */
 @media (max-width: 768px) {
     .modal-content {
-        width: 95%;
+        width: 80%;
         max-width: none;
         margin: 10px;
         padding: 20px 15px;

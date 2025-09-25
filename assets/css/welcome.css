@@ -1,4 +1,16 @@
 /* Welcome Page Styles */
+
+/* Prevent zooming and ensure stable viewport */
+*, *::before, *::after {
+    touch-action: manipulation;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    touch-action: manipulation;
+}
+
 body {
     font-family: 'Nunito', sans-serif !important;
     background: linear-gradient(135deg, #3a506b 0%, #1c2541 100%) !important;
@@ -13,6 +25,11 @@ body {
     align-items: initial !important;
     width: 100% !important;
     box-sizing: border-box !important;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* PWA Install Step Styles */
@@ -492,6 +509,27 @@ header h1 {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
+/* Header Logo Styling */
+.header-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-image {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    padding-bottom: 0px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    transition: transform 0.3s ease;
+}
+
+.logo-image:hover {
+    transform: scale(1.05);
+}
+
 #first-time-setup {
     max-width: 600px;
     margin: 0 auto;
@@ -895,6 +933,12 @@ header h1 {
     header {
         margin-top: max(10px, env(safe-area-inset-top)) !important;
         padding-top: 20px !important;
+    }
+    
+    .logo-image {
+        width: 110px !important;
+        height: 110px !important;
+        padding-bottom: 0px !important;
     }
     
     header h1 {

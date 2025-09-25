@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Bodhi 🌱</title>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Bodhi - AI Educational Companion</title>
     <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -52,7 +52,9 @@
     </div>
     <div class="app-container">
         <header>
-            <h1>Bodhi 🌱</h1>
+            <div class="header-logo">
+                <img src="assets/images/bodhi-logo.png" alt="Bodhi Logo" class="logo-image">
+            </div>
         </header>
 
         <!-- Main View for Kids -->
@@ -188,7 +190,7 @@
             <h2>🔒 Are you a grown-up?</h2>
             <p>To continue, please answer this question:</p>
             <p id="parental-question"></p>
-            <input type="number" id="parental-answer" placeholder="Your answer">
+            <input type="number" id="parental-answer" placeholder="Your answer" inputmode="numeric">
             <p id="parental-error-message" class="error-message hidden">Incorrect answer. Please try again.</p>
             <button id="submit-parental-answer-btn" class="btn-primary">Confirm</button>
             <button id="close-parental-gate-btn" class="btn-close">✖</button>
@@ -202,10 +204,10 @@
             <p>Please enter your 4-digit PIN to access parental controls.</p>
             <div class="pin-input-section">
                 <div class="pin-digits">
-                    <input type="password" class="pin-digit" maxlength="1" data-index="0">
-                    <input type="password" class="pin-digit" maxlength="1" data-index="1">
-                    <input type="password" class="pin-digit" maxlength="1" data-index="2">
-                    <input type="password" class="pin-digit" maxlength="1" data-index="3">
+                    <input type="password" class="pin-digit" maxlength="1" data-index="0" inputmode="numeric">
+                    <input type="password" class="pin-digit" maxlength="1" data-index="1" inputmode="numeric">
+                    <input type="password" class="pin-digit" maxlength="1" data-index="2" inputmode="numeric">
+                    <input type="password" class="pin-digit" maxlength="1" data-index="3" inputmode="numeric">
                 </div>
                 <button type="button" id="toggle-pin-entry-visibility" class="btn-secondary">Show PIN</button>
             </div>

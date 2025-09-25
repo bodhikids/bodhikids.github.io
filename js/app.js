@@ -8,7 +8,7 @@ import {
     generateMathProblem,
     generateLogicPuzzle
 } from './gemini.js';
-import { getPrompt, getAvailableModules } from './prompts.js';
+import { getPrompt, getAvailableModules, isModuleAvailable } from './prompts.js';
 import {
     renderProfilesForSettings,
     renderProfilesForKids,
@@ -442,7 +442,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const cleanedResult = result.replace(/```json/g, '').replace(/```/g, '').trim();
-            console.log("Attempting to parse:", cleanedResult.substring(0, 200) + "...");
+            console.log("Raw API result for", moduleType, "theme", currentTheme + ":");
+            console.log(cleanedResult.substring(0, 500) + "...");
+            console.log("Attempting to parse JSON...");
             const parsedResult = JSON.parse(cleanedResult);
 
             // Validate the response structure
@@ -450,22 +452,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error("Parsed result is null or undefined");
             }
 
+            console.log("Parsed result structure:", {
+                hasStory: !!parsedResult.story,
+                hasQuestions: !!parsedResult.questions,
+                questionsIsArray: Array.isArray(parsedResult.questions),
+                questionsLength: parsedResult.questions ? parsedResult.questions.length : 0,
+                hasWords: !!parsedResult.words,
+                wordsIsArray: Array.isArray(parsedResult.words)
+            });
+
             displayModuleContent(moduleTitle.textContent, parsedResult.story, markdownConverter);
 
             if (moduleType === 'spelling') {
                 if (!parsedResult.words || !Array.isArray(parsedResult.words)) {
+                    console.error("Invalid spelling response structure:", parsedResult);
                     throw new Error("Invalid spelling response: missing or invalid 'words' array");
                 }
                 questionsData = parsedResult.words.map(word => ({ word }));
                 displaySpellingModule(questionsData);
             } else if (moduleType === 'phonics') {
                 if (!parsedResult.questions || !Array.isArray(parsedResult.questions)) {
+                    console.error("Invalid phonics response structure:", parsedResult);
+                    console.error("Expected 'questions' array, got:", typeof parsedResult.questions);
                     throw new Error("Invalid phonics response: missing or invalid 'questions' array");
                 }
                 questionsData = parsedResult.questions;
                 displayPhonicsModule(questionsData);
             } else {
                 if (!parsedResult.questions || !Array.isArray(parsedResult.questions)) {
+                    console.error("Invalid general response structure:", parsedResult);
                     throw new Error("Invalid response: missing or invalid 'questions' array");
                 }
                 questionsData = parsedResult.questions;
@@ -929,6 +944,13 @@ document.addEventListener('DOMContentLoaded', () => {
         renderProfilesForKids(profiles, selectProfile);
     });
 
+    // Difficulty Slider Event Listener
+    difficultySlider?.addEventListener('input', (e) => {
+        const value = parseInt(e.target.value);
+        difficultyLevel = value;
+        difficultyLabel.textContent = value;
+    });
+
     settingsFab?.addEventListener('click', () => {
         openPinGate(() => {
             // Populate API key field
@@ -1211,7 +1233,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Get modules for this category
         const categoryModules = CATEGORIES[category] || [];
         
+        //console.log(`Filtering modules for age ${currentProfile ? currentProfile.age : 'no profile'} in category ${category}`);
+        //console.log('Available modules in category:', categoryModules);
+        
         categoryModules.forEach(moduleType => {
+            // Check if module is available for current profile's age
+            if (currentProfile && !isModuleAvailable(moduleType, currentProfile.age)) {
+                //console.log(`❌ Module ${moduleType} hidden for age ${currentProfile.age}`);
+                return; // Skip this module if not available for current age
+            }
+            
+            //console.log(`✅ Module ${moduleType} available for age ${currentProfile ? currentProfile.age : 'no profile'}`);
+            
             const moduleBtn = document.createElement('button');
             moduleBtn.className = 'module-btn';
             moduleBtn.dataset.module = moduleType;

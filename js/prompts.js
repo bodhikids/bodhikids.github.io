@@ -213,7 +213,20 @@ export function getPrompt(age, moduleType, theme = null, difficulty = 1) {
     } else if (moduleType === 'phonics') {
         const phonicsJsonStructure = `Please provide the output in a single, valid JSON object with two keys: "story" and "questions".
 - The "story" should be in Markdown format.
-- The "questions" should be an array of objects, where each object has "question", "options" (an array of 4 strings), "answer" (the 0-based index of the correct option), and "speak" (the single letter, sound, or word to be spoken).`;
+- The "questions" should be an array of objects, where each object has "question", "options" (an array of 4 strings), "answer" (the 0-based index of the correct option), and "speak" (the single letter, sound, or word to be spoken).
+
+Example JSON format:
+{
+  "story": "## ABC Sound Party! 🎉\\n\\nLet's learn letter sounds together!",
+  "questions": [
+    {
+      "question": "The letter 'B' makes a sound like a...",
+      "options": ["Ball ⚽", "Cat 🐈", "Dog 🐕", "Fish 🐠"],
+      "answer": 0,
+      "speak": "buh"
+    }
+  ]
+}`;
 
         switch (theme) {
             case 'abc':
@@ -241,6 +254,34 @@ export function getPrompt(age, moduleType, theme = null, difficulty = 1) {
                 - Example Question: "Which of these words has the 'sh' sound?", with options like "ship", "chair", "thumb".
                 - For this example, the "speak" field must be "shhh", NOT "s" and "h".
                 - Another example: For 'th', the "speak" field should be "the".`;
+                break;
+            case 'vowel-teams':
+                prompt = `Create a phonics module on "vowel teams" (like ae, ai, ea, ee, oa, ou) for a child (age ${age}). ${difficultyInstruction}
+                ${phonicsJsonStructure}
+                - The "story" should be a title like "## Vowel Teams! 👥".
+                - The "questions" should be 5-7 questions asking to identify words with vowel teams or choose the correct vowel team sound.
+                - The "speak" field should contain the vowel team sound (like "ay" for 'ai', "ee" for 'ea').
+                - Example Question: "Which word has the 'ai' sound like in 'rain'?", with options like "pain", "pen", "pin", "pan".
+                - For this example, the "speak" field should be "ay" (the long 'a' sound).
+                - Focus on common vowel teams: ai/ay (long a), ea/ee (long e), oa/ow (long o), ou/ow (ou sound).`;
+                break;
+            case 'blends':
+                prompt = `Create a phonics module on "consonant blends" (like bl, cl, fl, sl, br, cr, dr, fr, gr, pr, tr, st, sp, sk) for a child (age ${age}). ${difficultyInstruction}
+                ${phonicsJsonStructure}
+                - The "story" should be a title like "## Blending Sounds! 🌟".
+                - The "questions" should be 5-7 questions asking to identify words that start with specific blends.
+                - The "speak" field should contain the blended consonant sound (like "bl" for blend, "st" for stop).
+                - Example Question: "Which word starts with the 'bl' blend?", with options like "blue", "bus", "cat", "dog".
+                - For this example, the "speak" field should be "bl" (both consonants blended together).
+                - Focus on common initial blends: bl, cl, fl, sl (l-blends), br, cr, dr, fr, gr, pr, tr (r-blends), st, sp, sk, sm, sn (s-blends).`;
+                break;
+            default:
+                // Default phonics prompt if theme is not recognized
+                prompt = `Create a basic phonics module for a child (age ${age}). ${difficultyInstruction}
+                ${phonicsJsonStructure}
+                - The "story" should be a title like "## Phonics Fun! 🎵".
+                - The "questions" should be 5-7 basic phonics questions appropriate for the age.
+                - Include the "speak" field with the appropriate sound for each question.`;
                 break;
         }
     }
