@@ -904,7 +904,9 @@ hr {
     display: flex;
     gap: 15px;
     justify-content: center;
+    align-items: center;
     margin: 20px 0;
+    flex-wrap: nowrap;
 }
 
 .pin-digit {
@@ -915,7 +917,12 @@ hr {
     text-align: center;
     font-size: 1.5rem;
     font-weight: bold;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    background: white;
+    color: #333;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .pin-digit:focus {
@@ -1181,6 +1188,89 @@ hr {
 
 .notyf__toast {
     margin-top: max(10px, env(safe-area-inset-top)) !important;
+}
+
+/* Desktop specific PIN entry styling */
+@media (min-width: 769px) {
+    .modal-container {
+        backdrop-filter: blur(5px);
+    }
+    
+    .pin-digits {
+        gap: 20px;
+        margin: 25px 0;
+    }
+    
+    .pin-digit,
+    .pin-digit-reset {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 1.8rem !important;
+        border-width: 3px;
+        cursor: pointer;
+    }
+    
+    .pin-digit:focus,
+    .pin-digit-reset:focus {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 4px rgba(58, 80, 107, 0.15);
+    }
+    
+    .pin-digit:hover,
+    .pin-digit-reset:hover {
+        border-color: var(--primary-color);
+        transform: scale(1.02);
+    }
+    
+    .modal-content {
+        max-width: 500px;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    .pin-input-section h3 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+    
+    #toggle-pin-entry-visibility,
+    #toggle-reset-pin-visibility {
+        padding: 10px 20px;
+        font-size: 1rem;
+        margin: 15px 0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    #toggle-pin-entry-visibility:hover,
+    #toggle-reset-pin-visibility:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .step-actions {
+        gap: 15px;
+        margin-top: 25px;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        padding: 12px 24px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(58, 80, 107, 0.3);
+    }
+    
+    .btn-secondary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
 }
 
 /* Mobile specific toast positioning */

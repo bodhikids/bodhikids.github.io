@@ -215,6 +215,8 @@ export function getPrompt(age, moduleType, theme = null, difficulty = 1) {
 - The "story" should be in Markdown format.
 - The "questions" should be an array of objects, where each object has "question", "options" (an array of 4 strings), "answer" (the 0-based index of the correct option), and "speak" (the single letter, sound, or word to be spoken).
 
+IMPORTANT: Return ONLY valid JSON. No additional text, explanations, or code blocks.
+
 Example JSON format:
 {
   "story": "## ABC Sound Party! 🎉\\n\\nLet's learn letter sounds together!",
